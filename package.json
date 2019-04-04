@@ -7,7 +7,8 @@
     "react-dom": "^16.8.6",
     "react-materialize": "^3.0.4",
     "react-request": "^3.1.2",
-    "react-scripts": "2.1.8"
+    "react-scripts": "2.1.8",
+    "unsplash-js": "^5.0.0"
   },
   "scripts": {
     "start": "react-scripts start",
