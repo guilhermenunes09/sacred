@@ -4,9 +4,9 @@ import Thumb from './thumb.js';
 
 class ImgList extends Component {
   render() {
+    console.log();
     return (
       <React.Fragment>
-
             <CardPanel className="teal card-panel-custom">
                   <Thumb />
                   <Thumb />

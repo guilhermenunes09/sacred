@@ -12,6 +12,7 @@ class Index extends Component {
     super(props);
     this.state = {
       hidden_word: 'Default',
+      image:'',
     }
   }
 
@@ -19,13 +20,20 @@ class Index extends Component {
     this.setState({hidden_word});
   }
 
+  changeImage = (image) => {
+    this.setState({image});
+  }
+
   render() {
     console.log("New State");
     console.log(this.state.hidden_word);
+    console.log("Image");
+    console.log(this.state.image);
     return(
       <div className="Index">
             <Request refHiddenWord = {this.changeHiddenWord} {...this.state} />
-            <ImgList />
+            <Unsplash refImage={this.changeImage} />
+            <ImgList {...this.state} />
             <Canvas {...this.state} />
       </div>
     );

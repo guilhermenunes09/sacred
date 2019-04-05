@@ -41,6 +41,8 @@ code {
 
 .canvas {
   background-color: white;
+  background-repeat: no-repeat;
+  background-size: cover;
   width: 400px;
   height: 400px;
   margin: 0 auto;
