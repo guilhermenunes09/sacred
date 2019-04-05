@@ -7,9 +7,7 @@ class App extends Component {
   render() {
     return (
       <Router>
-        <React.Fragment>
            <Route path="/" exact component={Index} />
-        </React.Fragment>
       </Router>
     );
   }

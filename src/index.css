@@ -12,3 +12,36 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
     monospace;
 }
+
+.card-panel-custom {
+  background-color: blue !important;
+  width: 100% !important;
+  max-height: 150px !important;
+  display: flex !important;
+  overflow-x: scroll;
+  padding-top: 4px;
+  padding-bottom: 4px;
+  white-space: nowrap !important;
+}
+
+.card-custom {
+  display: inline-block !important;
+  width: 100px;
+  height: 100px;
+  margin: .4em;
+}
+
+.canvas-wrapper {
+  position: absolute;
+  background-color: orange;
+  width: 100%;
+  min-height: 70vh;
+  padding: 10px;
+}
+
+.canvas {
+  background-color: white;
+  width: 400px;
+  height: 400px;
+  margin: 0 auto;
+}
