@@ -25,10 +25,6 @@ class Index extends Component {
   }
 
   render() {
-    console.log("New State");
-    console.log(this.state.hidden_word);
-    console.log("Image");
-    console.log(this.state.image);
     return(
       <div className="Index">
             <Request refHiddenWord = {this.changeHiddenWord} {...this.state} />

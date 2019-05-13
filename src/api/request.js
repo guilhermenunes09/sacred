@@ -23,14 +23,13 @@ class Request extends Component {
            }
 
            if (data) {
-             console.log("chegin props");
-             console.log(this.props);
+
              if(this.state.count_once === 0) {
                this.setState({count_once: 1});
                const random = Math.floor(Math.random() * (+data.length));
                const hidden_word = data[random].Text;
                this.props.refHiddenWord(hidden_word);
-               console.log(data[random].Text);
+
              }
              return (
                <div>

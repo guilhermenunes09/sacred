@@ -9,14 +9,10 @@ const unsplash = new Unsplashjs({
 class Unsplash extends Component {
 
   componentDidMount(){
-    console.log(unsplash);
-    console.log(process.env.REACT_APP_UNSPLAH_ACCESS_KEY);
-
     unsplash.search.photos("love", 2, 2)
     .then(toJson)
     .then(json => {
-      console.log("result");
-      console.log(json);
+
       this.props.refImage(json);
     });
 
