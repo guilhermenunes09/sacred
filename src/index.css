@@ -8,6 +8,9 @@ body {
   -moz-osx-font-smoothing: grayscale;
 }
 
+.hidden {
+  display: none;
+}
 code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
     monospace;
@@ -28,7 +31,7 @@ code {
   display: inline-block !important;
   width: 100px;
   height: 100px;
-  margin: .4em;
+  margin: 0.4em;
 }
 
 .canvas-wrapper {
@@ -39,7 +42,6 @@ code {
 }
 
 .canvas {
-  
   width: 400px;
   height: 400px;
   margin: 0 auto;

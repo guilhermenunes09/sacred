@@ -1,87 +1,86 @@
-import React, { Component } from 'react';
-import { Row, Col, CardPanel} from 'react-materialize';
-import 'tui-image-editor/dist/tui-image-editor.css'
-import ImageEditor from '@toast-ui/react-image-editor'
+import React, { Component } from "react";
+import { Row, Col, CardPanel } from "react-materialize";
 
 class Canvas extends Component {
-  
-
   constructor(props) {
     super(props);
     this.editorRef = React.createRef();
     this.state = {
-      image: '',
-      count_once: 0,
-    }
+      image: "",
+      count_once: 0
+    };
   }
 
-  componentDidMount(){
-    console.log("Windows");
-    
-    console.log("props");
-    console.log(this.props);
+  calcHeight = (w2, h2) => {
+    const w1 = 640;
+    return (h2 * w1) / w2;
+  };
 
-    console.log("UI<<<<<");
-    console.log(this.editorRef);
+  createParagraph = (ctx, text, pos_x, pos_y) => {
+    const words = text.split(" ");
+    const leading = 5; // Space between letters
+    const spacing = 25; // Space between lines
+    let word_width = 0;
 
-    
+    let temp_width = pos_x; // Start Position X
+    let temp_height = pos_y; // Start Position Y
 
-   
-    
+    for (let i = 0; i <= words.length; i++) {
+      word_width = ctx.measureText(words[i]).width;
+      console.log("Word width:" + word_width);
+      ctx.fillText(words[i], temp_width, temp_height);
+      temp_width = temp_width + word_width + leading;
 
+      if (temp_width > 500) {
+        console.log("maior de 600");
+        temp_height = temp_height + spacing;
+        temp_width = pos_x;
+      }
+    }
+  };
+
+  componentDidMount() {
+    const canvas = this.refs.canvas;
+    const ctx = canvas.getContext("2d");
+    const img = this.refs.image;
+
+    img.onload = () => {
+      const width = this.props.image.width;
+      const height = this.props.image.height;
+      console.log("width:" + width);
+      console.log("height:" + height);
+      let new_height = this.calcHeight(width, height);
+      ctx.drawImage(img, 0, 0, 640, new_height);
+      ctx.font = "20px Arial";
+      ctx.fillStyle = "#FFFFFF";
+      this.createParagraph(ctx, this.props.hidden_word, 55, 155);
+    };
   }
 
   render() {
-
     const image = this.props.image;
-    let image_show = '';
     console.log(image);
-    if(typeof image.results !== "undefined" && this.state.count_once === 0) {
-      if(image.results.length > 0) {
-        this.setState({image: image.results[0].urls.small})
-        this.setState({count_once: 1});
-        console.log("IMAGE");
-        console.log(image.results[0].urls.small);
-        //this.editorRef.current.props.includeUI.loadImageFromURL('http://url/testImage.png', 'lena');
-    
-        
+    let width = 0;
+    let height = 0;
 
-        image_show = image.results[0].urls.small;
-    
-
-      }
+    if (this.props.image !== undefined) {
+      width = this.props.image.width;
+      height = this.props.image.height;
     }
 
-    if(this.state.image) {
-      const editorInstance = this.editorRef.current.getInstance();    
-        editorInstance.loadImageFromURL(image.results[0].urls.regular, 'lena').then(result => {
-          console.log('old : ' + result.oldWidth + ', ' + result.oldHeight);
-          console.log('new : ' + result.newWidth + ', ' + result.newHeight);
-          editorInstance.ui.resizeEditor({
-            imageSize: {oldWidth: result.oldWidth, oldHeight: result.oldHeight, newWidth: result.newWidth, newHeight: result.newHeight},
-        });
-        
-        });
-    }
-    
     return (
-      <div className="canvas-wrapper center">
-         <ImageEditor
-            ref={this.editorRef}
-            includeUI={{
-              loadImage: {
-                path: 'img/sampleImage.jpg',
-                name: 'SampleImage'
-              },
-              menu: ['shape', 'filter'],
-              initMenu: 'filter',
-              uiSize: {
-                width: '1000px',
-                height: '700px'
-              },
-              menuBarPosition: 'bottom'
-            }}
-          />
+      <div>
+        <canvas
+          ref="canvas"
+          width={640}
+          height={this.props.image ? this.calcHeight(width, height) : height}
+          id="canvas"
+        />
+        <img
+          ref="image"
+          src={this.props.image && this.props.image.urls.regular}
+          className="hidden"
+        />
       </div>
     );
   }
