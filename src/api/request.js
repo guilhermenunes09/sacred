@@ -25,8 +25,8 @@ class Request extends Component {
             if (this.state.count_once === 0) {
               this.setState({ count_once: 1 });
               const random = Math.floor(Math.random() * +data.length);
-              const hidden_word = data[random].Text;
-              this.props.refHiddenWord(hidden_word);
+              const quote = data[random].Text;
+              this.props.refQuote(quote);
             }
             return <div />;
           }

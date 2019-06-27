@@ -3,20 +3,23 @@ import "../../App.css";
 import Request from "../../api/request.js";
 import Unsplash from "../../api/unsplash.js";
 import ImgList from "./img_list.js";
+import OptionQuote from "./option_quote.js";
 import Canvas from "./canvas.js";
 
 class Index extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      hidden_word: "Default",
+      quote: "Default",
       images: [],
-      image: ""
+      image: "",
+      option_imgs: false,
+      option_quote: true
     };
   }
 
-  changeHiddenWord = hidden_word => {
-    this.setState({ hidden_word });
+  changeQuote = quote => {
+    this.setState({ quote });
   };
 
   refImages = images => {
@@ -29,10 +32,24 @@ class Index extends Component {
     this.setState({ image });
   };
 
+  changeText = text => {
+    this.setState({ quote: text });
+  };
+
+  goToImageOption = () => {
+    this.setState({ option_imgs: true });
+    this.setState({ option_quote: false });
+  };
+
+  goToQuoteOption = () => {
+    this.setState({ option_imgs: false });
+    this.setState({ option_quote: true });
+  };
+
   render() {
     return (
       <div className="Index">
-        <Request refHiddenWord={this.changeHiddenWord} {...this.state} />
+        <Request refQuote={this.changeQuote} {...this.state} />
         <Unsplash refImages={this.refImages} />
 
         <div className="d-flex justify-content-center ">
@@ -40,9 +57,21 @@ class Index extends Component {
         </div>
 
         <footer className="footer">
-          <ImgList refThumbClick={this.refThumbClick} {...this.state} />
+          {this.state.option_imgs && (
+            <ImgList refThumbClick={this.refThumbClick} {...this.state} />
+          )}
+          {this.state.option_quote && (
+            <OptionQuote
+              refChangeText={this.changeText}
+              quote={this.state.quote}
+            />
+          )}
         </footer>
-        <div className="footer2 p-2">Citação | Imagem | Estilos</div>
+
+        <div className="footer2 p-2">
+          <span onClick={this.goToQuoteOption}>Citação</span> |{" "}
+          <span onClick={this.goToImageOption}>Imagem</span> | Estilos
+        </div>
       </div>
     );
   }

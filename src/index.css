@@ -13,6 +13,11 @@ body {
   display: none;
 }
 
+canvas {
+  width: 500px;
+  height: auto;
+}
+
 .img-thumb-background {
   display: inline-block;
   width: 200px;
