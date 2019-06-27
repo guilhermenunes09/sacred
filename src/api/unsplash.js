@@ -9,7 +9,7 @@ const unsplash = new Unsplashjs({
 class Unsplash extends Component {
   componentDidMount() {
     unsplash.search
-      .photos("love", 2, 2)
+      .photos("friendship", 1, 5)
       .then(toJson)
       .then(json => {
         if (typeof json !== "undefined") {
@@ -19,7 +19,7 @@ class Unsplash extends Component {
   }
 
   render() {
-    return <React.Fragment>Olá, testand Unsplashjs Hello</React.Fragment>;
+    return <React.Fragment />;
   }
 }
 

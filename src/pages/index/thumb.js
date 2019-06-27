@@ -1,15 +1,20 @@
 import React, { Component } from "react";
-import { Row, Col, Card, CardTitle } from "react-materialize";
 
 class Thumb extends Component {
+  constructor(props) {
+    super(props);
+  }
+
   render() {
     return (
       <React.Fragment>
-        <Col m={1} s={1}>
-          <div className="card card-custom">
-            <img onClick={this.props.onClick} src={this.props.image_url} />
-          </div>
-        </Col>
+        <div
+          onClick={this.props.onClick}
+          className="img-thumb-background"
+          style={{ backgroundImage: `url(${this.props.image_url})` }}
+        >
+          {" "}
+        </div>
       </React.Fragment>
     );
   }

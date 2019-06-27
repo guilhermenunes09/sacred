@@ -1,5 +1,4 @@
 import React, { Component } from "react";
-import { Row, Col, CardPanel } from "react-materialize";
 import Thumb from "./thumb.js";
 
 class ImgList extends Component {
@@ -7,6 +6,9 @@ class ImgList extends Component {
     super(props);
     this.refThumbClick = this.refThumbClick.bind(this);
   }
+
+  componentDidMount() {}
+
   refThumbClick(image) {
     console.log("Event Clicked" + image);
     this.props.refThumbClick(image);
@@ -15,17 +17,21 @@ class ImgList extends Component {
   render() {
     return (
       <React.Fragment>
-        <CardPanel className="teal card-panel-custom">
+        <div className="d-flex flex-row mx-auto">
+          <i class="material-icons align-self-center p-2">arrow_back_ios</i>
           {this.props.images.map((name, index) => {
             return (
-              <Thumb
-                key={index}
-                onClick={() => this.refThumbClick(name)}
-                image_url={name.urls.thumb}
-              />
+              <div className="p-2 mx-auto" key={index}>
+                <Thumb
+                  key={index}
+                  onClick={() => this.refThumbClick(name)}
+                  image_url={name.urls.thumb}
+                />
+              </div>
             );
           })}
-        </CardPanel>
+          <i class="material-icons align-self-center p-2">arrow_forward_ios</i>
+        </div>
       </React.Fragment>
     );
   }

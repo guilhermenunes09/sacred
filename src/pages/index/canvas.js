@@ -1,5 +1,4 @@
 import React, { Component } from "react";
-import { Row, Col, CardPanel } from "react-materialize";
 
 class Canvas extends Component {
   constructor(props) {
@@ -27,39 +26,49 @@ class Canvas extends Component {
 
     for (let i = 0; i <= words.length; i++) {
       word_width = ctx.measureText(words[i]).width;
-      console.log("Word width:" + word_width);
       ctx.fillText(words[i], temp_width, temp_height);
       temp_width = temp_width + word_width + leading;
 
       if (temp_width > 500) {
-        console.log("maior de 600");
         temp_height = temp_height + spacing;
         temp_width = pos_x;
       }
     }
   };
 
-  componentDidMount() {
+  loadCanvas = font_size => {
     const canvas = this.refs.canvas;
     const ctx = canvas.getContext("2d");
     const img = this.refs.image;
-
-    img.onload = () => {
-      const width = this.props.image.width;
-      const height = this.props.image.height;
-      console.log("width:" + width);
-      console.log("height:" + height);
-      let new_height = this.calcHeight(width, height);
+    const width = this.props.image.width;
+    const height = this.props.image.height;
+    let new_height = this.calcHeight(width, height);
+    //ctx.drawImage(img, 0, 0, 640, new_height);
+    if (height > width) {
+      ctx.drawImage(img, 0, 400, new_height / 2, 480, 0, 0, 640, 480);
+    } else {
       ctx.drawImage(img, 0, 0, 640, new_height);
-      ctx.font = "20px Arial";
-      ctx.fillStyle = "#FFFFFF";
-      this.createParagraph(ctx, this.props.hidden_word, 55, 155);
+    }
+
+    ctx.font = `${font_size}px Arial`;
+    ctx.fillStyle = "#FFFFFF";
+    this.createParagraph(ctx, this.props.hidden_word, 55, 55);
+  };
+
+  componentDidMount() {
+    const img = this.refs.image;
+    img.onload = () => {
+      this.loadCanvas(20);
     };
   }
 
+  handleChange = event => {
+    const font_size = event.currentTarget.value;
+    this.loadCanvas(font_size);
+  };
+
   render() {
     const image = this.props.image;
-    console.log(image);
     let width = 0;
     let height = 0;
 
@@ -70,17 +79,34 @@ class Canvas extends Component {
 
     return (
       <div>
-        <canvas
-          ref="canvas"
-          width={640}
-          height={this.props.image ? this.calcHeight(width, height) : height}
-          id="canvas"
-        />
-        <img
-          ref="image"
-          src={this.props.image && this.props.image.urls.regular}
-          className="hidden"
-        />
+        <div className="settings">
+          <h4 className="text-center">Configurações</h4>
+          <div className="form-group">
+            <label>
+              Tamanho:
+              <input
+                type="text"
+                name="font-size"
+                defaultValue={this.state.font_size}
+                onChange={e => this.handleChange(e)}
+              />
+            </label>
+            <input type="submit" value="Submit" />
+          </div>
+        </div>
+        <div className="canvas">
+          <canvas
+            ref="canvas"
+            width={640}
+            height={this.props.image ? this.calcHeight(width, height) : height}
+            id="canvas"
+          />
+          <img
+            ref="image"
+            src={this.props.image && this.props.image.urls.regular}
+            className="hidden"
+          />
+        </div>
       </div>
     );
   }

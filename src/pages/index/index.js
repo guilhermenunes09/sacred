@@ -2,7 +2,6 @@ import React, { Component } from "react";
 import "../../App.css";
 import Request from "../../api/request.js";
 import Unsplash from "../../api/unsplash.js";
-import { Button, Card, Row, Col } from "react-materialize";
 import ImgList from "./img_list.js";
 import Canvas from "./canvas.js";
 
@@ -35,8 +34,15 @@ class Index extends Component {
       <div className="Index">
         <Request refHiddenWord={this.changeHiddenWord} {...this.state} />
         <Unsplash refImages={this.refImages} />
-        <ImgList refThumbClick={this.refThumbClick} {...this.state} />
-        <Canvas {...this.state} />
+
+        <div className="d-flex justify-content-center ">
+          <Canvas {...this.state} />
+        </div>
+
+        <footer className="footer">
+          <ImgList refThumbClick={this.refThumbClick} {...this.state} />
+        </footer>
+        <div className="footer2 p-2">Citação | Imagem | Estilos</div>
       </div>
     );
   }

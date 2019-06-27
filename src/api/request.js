@@ -28,12 +28,7 @@ class Request extends Component {
               const hidden_word = data[random].Text;
               this.props.refHiddenWord(hidden_word);
             }
-            return (
-              <div>
-                <div>Post ID: {data.id}</div>
-                <div>Post Title: {data.title}</div>
-              </div>
-            );
+            return <div />;
           }
 
           return null;
