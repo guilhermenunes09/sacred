@@ -18,7 +18,7 @@ class ImgList extends Component {
     return (
       <React.Fragment>
         <div className="d-flex flex-row mx-auto">
-          <i class="material-icons align-self-center p-2">arrow_back_ios</i>
+          <i className="material-icons align-self-center p-2">arrow_back_ios</i>
           {this.props.images.map((name, index) => {
             return (
               <div className="p-2 mx-auto" key={index}>
