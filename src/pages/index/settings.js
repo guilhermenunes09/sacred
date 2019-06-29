@@ -25,6 +25,14 @@ class Settings extends Component {
     this.props.refSetPosY(pos_y);
   };
 
+  topLeftText = event => {
+    this.props.refSetTopLeft();
+  };
+
+  topRightText = event => {
+    this.props.refSetTopRight();
+  };
+
   render() {
     return (
       <div className="settings">
@@ -56,7 +64,7 @@ class Settings extends Component {
                   className="form-control"
                   name="pos-x"
                   pattern="[0-9]*"
-                  defaultValue={this.props.posX}
+                  value={this.props.posX}
                   onChange={e => this.handleChangePosX(e)}
                 />
               </label>
@@ -71,10 +79,23 @@ class Settings extends Component {
                   className="form-control"
                   name="pos-y"
                   pattern="[0-9]*"
-                  defaultValue={this.props.posY}
+                  value={this.props.posY}
                   onChange={e => this.handleChangePosY(e)}
                 />
               </label>
+            </div>
+          </div>
+        </div>
+        <div className="row mx-auto">
+          <div className="col">
+            Posição:
+            <div className="d-flex d-inline">
+              <div onClick={e => this.topLeftText(e)} className="box" />
+              <div onClick={e => this.topRightText(e)} className="box" />
+            </div>
+            <div className="d-flex d-inline">
+              <div className="box top-left" />
+              <div className="box" />
             </div>
           </div>
         </div>

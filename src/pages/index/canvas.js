@@ -9,8 +9,9 @@ class Canvas extends Component {
       image: "",
       settings: {
         font_size: 23,
-        pos_y: 55,
-        pos_x: 55
+        pos_y: 100,
+        pos_x: 210,
+        square_width: 400
       },
       factor: 5,
       count_once: 0
@@ -31,25 +32,37 @@ class Canvas extends Component {
 
     let temp_width = pos_x; // Start Position X
     let temp_height = pos_y; // Start Position Y
+    let line = "";
+    const square_width = parseInt(this.state.settings.square_width);
 
     for (let i = 0; i <= words.length; i++) {
       if (typeof words[i] !== "undefined") {
         word_width = ctx.measureText(words[i]).width;
-        ctx.fillText(words[i], temp_width, temp_height);
-        temp_width = temp_width + word_width + leading;
-        if (temp_width > pos_x + 400) {
-          word_width = 0;
 
+        temp_width = temp_width + word_width + leading;
+        if (temp_width > pos_x + square_width) {
+          ctx.fillText(line, pos_x, temp_height);
+          console.log("line: " + line);
+          line = "";
+          word_width = 0;
           temp_height = temp_height + spacing;
           temp_width = pos_x;
+        } else {
+          line = line + words[i] + " ";
+          ctx.fillText(line, pos_x, temp_height);
         }
       }
     }
+    ctx.fillText(line, pos_x, temp_height);
+    ctx.rect(pos_x - 10, pos_y - 30, square_width, temp_height);
+    ctx.stroke();
   };
 
   loadCanvas = (font_size, pos_x, pos_y) => {
     const canvas = this.refs.canvas;
     const ctx = canvas.getContext("2d");
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    ctx.beginPath();
     const img = this.refs.image;
     const width = this.props.image.width / this.state.factor;
     const height = this.props.image.height / this.state.factor;
@@ -57,9 +70,8 @@ class Canvas extends Component {
 
     ctx.font = `${font_size}px Arial`;
     ctx.fillStyle = "#FFFFFF";
-    console.log("***************" + this.props.quote);
+
     if (this.props.quote !== undefined) {
-      console.log("<<<<<<<<<<Text");
       this.createParagraph(ctx, pos_x, pos_y, font_size);
     }
   };
@@ -103,6 +115,32 @@ class Canvas extends Component {
     this.setState({ settings });
   };
 
+  refSetTopLeft = () => {
+    let settings = this.state.settings;
+    settings.pos_y = 50;
+    settings.pos_x = 50;
+    this.setState({ settings });
+  };
+
+  refSetTopRight = () => {
+    let settings = this.state.settings;
+    const width =
+      parseInt(this.props.image.width) / parseInt(this.state.factor);
+    const square_width = parseInt(this.state.settings.square_width);
+    settings.pos_y = 50;
+
+    let pos_x = width - square_width - 20;
+
+    while (parseInt(pos_x) + parseInt(square_width) > width) {
+      console.log(parseInt(pos_x) + parseInt(square_width));
+      console.log("width:" + width);
+      pos_x -= 15;
+    }
+    settings.pos_x = pos_x;
+
+    this.setState({ settings });
+  };
+
   render() {
     const image = this.props.image;
     let width = 0;
@@ -124,6 +162,8 @@ class Canvas extends Component {
           refSetPosX={this.refSetPosX}
           refSetPosY={this.refSetPosY}
           refSetFontSize={this.refSetFontSize}
+          refSetTopLeft={this.refSetTopLeft}
+          refSetTopRight={this.refSetTopRight}
         />
 
         <canvas
@@ -133,6 +173,7 @@ class Canvas extends Component {
           height={height / this.state.factor}
           id="canvas"
         />
+
         <img
           ref="image"
           src={this.props.image && this.props.image.urls.regular}
