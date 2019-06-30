@@ -37,6 +37,10 @@ class Settings extends Component {
     this.props.refSetBottomLeft();
   };
 
+  bottomRightText = event => {
+    this.props.refSetBottomRight();
+  };
+
   render() {
     return (
       <div className="settings">
@@ -58,6 +62,10 @@ class Settings extends Component {
                 />
               </label>
             </div>
+          </div>
+        </div>
+        <div className="row">
+          <div className="col-6">
             <div className="form-group">
               <label>
                 Pos X:
@@ -73,6 +81,8 @@ class Settings extends Component {
                 />
               </label>
             </div>
+          </div>
+          <div className="col-6">
             <div className="form-group">
               <label>
                 Pos Y:
@@ -100,9 +110,12 @@ class Settings extends Component {
             <div className="d-flex d-inline">
               <div
                 onClick={e => this.bottomLeftText(e)}
-                className="box top-left"
+                className="box bottom-left"
               />
-              <div className="box" />
+              <div
+                onClick={e => this.bottomRightText(e)}
+                className="box bottom-right"
+              />
             </div>
           </div>
         </div>
