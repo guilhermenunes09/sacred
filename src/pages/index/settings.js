@@ -8,20 +8,46 @@ class Settings extends Component {
   changeFontSize = event => {
     const font_size = parseInt(event.currentTarget.value);
     if (font_size >= 1 && font_size <= 40) {
-      this.props.loadCanvas(font_size, this.props.posX, this.props.posY);
+      this.props.loadCanvas(
+        font_size,
+        this.props.fontColor,
+        this.props.posX,
+        this.props.posY
+      );
       this.props.refSetFontSize(font_size);
     }
   };
 
+  changeFontColor = event => {
+    const font_color = event.currentTarget.value;
+    this.props.loadCanvas(
+      this.props.fontSize,
+      font_color,
+      this.props.posX,
+      this.props.posY
+    );
+    this.props.refSetFontColor(font_color);
+  };
+
   handleChangePosX = event => {
     const pos_x = parseInt(event.currentTarget.value);
-    this.props.loadCanvas(this.props.fontSize, pos_x, this.props.posY);
+    this.props.loadCanvas(
+      this.props.fontSize,
+      this.props.fontColor,
+      pos_x,
+      this.props.posY
+    );
     this.props.refSetPosX(pos_x);
   };
 
   handleChangePosY = event => {
     const pos_y = parseInt(event.currentTarget.value);
-    this.props.loadCanvas(this.props.fontSize, this.props.posX, pos_y);
+    this.props.loadCanvas(
+      this.props.fontSize,
+      this.props.fontColor,
+      this.props.posX,
+      pos_y
+    );
     this.props.refSetPosY(pos_y);
   };
 
@@ -46,7 +72,7 @@ class Settings extends Component {
       <div className="settings">
         <h4 className="text-center">Configurações</h4>
         <div className="row mx-auto">
-          <div className="col">
+          <div className="col-6">
             <div className="form-group">
               <label>
                 Tamanho:
@@ -59,6 +85,20 @@ class Settings extends Component {
                   pattern="[0-9]*"
                   defaultValue={this.props.fontSize}
                   onChange={e => this.changeFontSize(e)}
+                />
+              </label>
+            </div>
+          </div>
+          <div className="col-6">
+            <div className="form-group">
+              <label>
+                Cor:
+                <input
+                  type="text"
+                  className="form-control"
+                  name="font-color"
+                  defaultValue={this.props.fontColor}
+                  onChange={e => this.changeFontColor(e)}
                 />
               </label>
             </div>

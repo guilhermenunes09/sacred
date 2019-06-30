@@ -15,7 +15,8 @@ class Index extends Component {
       image: "",
       option_imgs: false,
       option_quote: true,
-      key_word: "environment"
+      key_word: "environment",
+      actual_page: 1
     };
   }
 
@@ -52,11 +53,22 @@ class Index extends Component {
     this.setState({ key_word });
   };
 
+  refChangeActualPage = delta => {
+    console.log("Delta");
+    if (this.state.actual_page + delta >= 1) {
+      this.setState({ actual_page: this.state.actual_page + delta });
+    }
+  };
+
   render() {
     return (
       <div className="Index">
         <Request refQuote={this.changeQuote} {...this.state} />
-        <Unsplash key_word={this.state.key_word} refImages={this.refImages} />
+        <Unsplash
+          actual_page={this.state.actual_page}
+          key_word={this.state.key_word}
+          refImages={this.refImages}
+        />
 
         <div className="d-flex justify-content-center ">
           <Canvas refSetKeyWord={this.refSetKeyWord} {...this.state} />
@@ -64,7 +76,11 @@ class Index extends Component {
 
         <footer className="footer">
           {this.state.option_imgs && (
-            <ImgList refThumbClick={this.refThumbClick} {...this.state} />
+            <ImgList
+              refChangeActualPage={this.refChangeActualPage}
+              refThumbClick={this.refThumbClick}
+              {...this.state}
+            />
           )}
           {this.state.option_quote && (
             <OptionQuote

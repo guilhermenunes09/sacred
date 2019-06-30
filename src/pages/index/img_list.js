@@ -14,11 +14,20 @@ class ImgList extends Component {
     this.props.refThumbClick(image);
   }
 
+  changeActualPage = delta => {
+    this.props.refChangeActualPage(delta);
+  };
+
   render() {
     return (
       <React.Fragment>
         <div className="d-flex flex-row mx-auto">
-          <i className="material-icons align-self-center p-2">arrow_back_ios</i>
+          <i
+            onClick={e => this.changeActualPage(-1)}
+            className="material-icons align-self-center p-2"
+          >
+            arrow_back_ios
+          </i>
           {this.props.images.map((name, index) => {
             return (
               <div className="p-2 mx-auto" key={index}>
@@ -30,7 +39,12 @@ class ImgList extends Component {
               </div>
             );
           })}
-          <i class="material-icons align-self-center p-2">arrow_forward_ios</i>
+          <i
+            onClick={e => this.changeActualPage(1)}
+            class="material-icons align-self-center p-2"
+          >
+            arrow_forward_ios
+          </i>
         </div>
       </React.Fragment>
     );

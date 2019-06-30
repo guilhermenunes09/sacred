@@ -14,7 +14,7 @@ class Canvas extends Component {
         pos_x: 210,
         square_width: 400,
         square_height: 200,
-        is_bottom: true
+        font_color: "#FFFFFF"
       },
       factor: 5,
       count_once: 0
@@ -62,7 +62,7 @@ class Canvas extends Component {
     return square_height;
   };
 
-  loadCanvas = (font_size, pos_x, pos_y) => {
+  loadCanvas = (font_size, font_color, pos_x, pos_y) => {
     const canvas = this.refs.canvas;
     const ctx = canvas.getContext("2d");
     ctx.clearRect(0, 0, canvas.width, canvas.height);
@@ -73,20 +73,30 @@ class Canvas extends Component {
     ctx.drawImage(img, 0, 0, width, height);
 
     ctx.font = `${font_size}px Arial`;
-    ctx.fillStyle = "#FFFFFF";
+    ctx.fillStyle = font_color;
+
+    console.log("font_size:" + font_size);
+    console.log("font_color:" + font_color);
+    console.log("pos_x:" + pos_x);
+    console.log("pos_y:" + pos_y);
 
     if (this.props.quote !== undefined) {
       this.createParagraph(ctx, pos_x, pos_y, font_size);
     }
   };
 
-  componentDidUpdate(props, prevProps) {
-    if (props !== prevProps) {
+  componentDidUpdate(prevProps) {
+    if (this.props !== prevProps) {
       this.loadCanvas(
         this.state.settings.font_size,
+        this.state.settings.font_color,
         this.state.settings.pos_x,
         this.state.settings.pos_y
       );
+    }
+
+    if (this.props.image !== prevProps.image) {
+      this.refSetTopLeft();
     }
   }
 
@@ -95,6 +105,7 @@ class Canvas extends Component {
     img.onload = () => {
       this.loadCanvas(
         this.state.settings.font_size,
+        this.state.settings.font_color,
         this.state.settings.pos_x,
         this.state.settings.pos_y
       );
@@ -119,10 +130,22 @@ class Canvas extends Component {
     this.setState({ settings });
   };
 
+  refSetFontColor = font_color => {
+    let settings = this.state.settings;
+    settings.font_color = font_color;
+    this.setState({ settings });
+  };
+
   refSetTopLeft = () => {
     let settings = this.state.settings;
     settings.pos_y = 50;
     settings.pos_x = 50;
+    this.loadCanvas(
+      this.state.settings.font_size,
+      this.state.settings.font_color,
+      settings.pos_x,
+      settings.pos_y
+    );
     this.setState({ settings });
   };
 
@@ -132,13 +155,14 @@ class Canvas extends Component {
       parseInt(this.props.image.width) / parseInt(this.state.factor);
     const square_width = parseInt(this.state.settings.square_width);
     settings.pos_y = 50;
-
     let pos_x = width - square_width - 20;
-
-    while (parseInt(pos_x) + parseInt(square_width) > width) {
-      pos_x -= 15;
-    }
     settings.pos_x = pos_x;
+    this.loadCanvas(
+      this.state.settings.font_size,
+      this.state.settings.font_color,
+      settings.pos_x,
+      settings.pos_y
+    );
 
     this.setState({ settings });
   };
@@ -179,6 +203,7 @@ class Canvas extends Component {
 
     this.loadCanvas(
       this.state.settings.font_size,
+      this.state.settings.font_color,
       settings.pos_x,
       settings.pos_y
     );
@@ -199,6 +224,7 @@ class Canvas extends Component {
 
     this.loadCanvas(
       this.state.settings.font_size,
+      this.state.settings.font_color,
       settings.pos_x,
       settings.pos_y
     );
@@ -221,12 +247,14 @@ class Canvas extends Component {
         <Settings
           loadCanvas={this.loadCanvas}
           fontSize={this.state.settings.font_size}
+          fontColor={this.state.settings.font_color}
           quote={this.state.quote}
           posX={this.state.settings.pos_x}
           posY={this.state.settings.pos_y}
           refSetPosX={this.refSetPosX}
           refSetPosY={this.refSetPosY}
           refSetFontSize={this.refSetFontSize}
+          refSetFontColor={this.refSetFontColor}
           refSetTopLeft={this.refSetTopLeft}
           refSetTopRight={this.refSetTopRight}
           refSetBottomLeft={this.refSetBottomLeft}

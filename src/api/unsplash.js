@@ -12,7 +12,7 @@ class Unsplash extends Component {
   }
   imageSearch = () => {
     unsplash.search
-      .photos(this.props.key_word, 1, 5)
+      .photos(this.props.key_word, this.props.actual_page, 5)
       .then(toJson)
       .then(json => {
         if (typeof json !== "undefined") {
@@ -28,6 +28,10 @@ class Unsplash extends Component {
 
   componentDidUpdate(prevProps) {
     if (this.props.key_word !== prevProps.key_word) {
+      console.log("New Search");
+      this.imageSearch();
+    }
+    if (this.props.actual_page !== prevProps.actual_page) {
       console.log("New Search");
       this.imageSearch();
     }
