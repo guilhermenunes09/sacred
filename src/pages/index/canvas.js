@@ -11,7 +11,9 @@ class Canvas extends Component {
         font_size: 23,
         pos_y: 100,
         pos_x: 210,
-        square_width: 400
+        square_width: 400,
+        square_height: 200,
+        is_bottom: true
       },
       factor: 5,
       count_once: 0
@@ -26,35 +28,40 @@ class Canvas extends Component {
   createParagraph = (ctx, pos_x, pos_y, font_size) => {
     let text = this.props.quote;
     let words = text.split(" ");
-    const leading = 5; // Space between letters
+    const leading = 0; // Space between letters
     const spacing = 25 * (font_size * 0.05); // Space between lines
     let word_width = 0.0;
 
     let temp_width = pos_x; // Start Position X
-    let temp_height = pos_y; // Start Position Y
+    let line_height = pos_y; // Start Position Y
     let line = "";
     const square_width = parseInt(this.state.settings.square_width);
+    let word_height = 0;
+    let line_width = 0;
+    let square_height = 1;
+    let next_word_width = "";
 
     for (let i = 0; i <= words.length; i++) {
       if (typeof words[i] !== "undefined") {
+        line = line + words[i] + " ";
         word_width = ctx.measureText(words[i]).width;
-
-        temp_width = temp_width + word_width + leading;
-        if (temp_width > pos_x + square_width) {
-          ctx.fillText(line, pos_x, temp_height);
-          console.log("line: " + line);
+        next_word_width = parseFloat(ctx.measureText(words[i + 1]).width);
+        line_width =
+          parseFloat(
+            line_width + ctx.measureText(line).width + next_word_width
+          ) *
+          (font_size * 0.03);
+        if (line_width >= square_width || i === words.length - 1) {
+          ctx.fillText(line + "<><>" + i, pos_x, line_height);
           line = "";
-          word_width = 0;
-          temp_height = temp_height + spacing;
-          temp_width = pos_x;
-        } else {
-          line = line + words[i] + " ";
-          ctx.fillText(line, pos_x, temp_height);
+          line_width = 0;
+          line_height += spacing;
+          square_height += spacing;
         }
       }
     }
-    ctx.fillText(line, pos_x, temp_height);
-    ctx.rect(pos_x - 10, pos_y - 30, square_width, temp_height);
+
+    ctx.rect(pos_x - 10, pos_y - 30, square_width, square_height + 30);
     ctx.stroke();
   };
 
@@ -132,12 +139,23 @@ class Canvas extends Component {
     let pos_x = width - square_width - 20;
 
     while (parseInt(pos_x) + parseInt(square_width) > width) {
-      console.log(parseInt(pos_x) + parseInt(square_width));
-      console.log("width:" + width);
       pos_x -= 15;
     }
     settings.pos_x = pos_x;
 
+    this.setState({ settings });
+  };
+
+  refSetBottomLeft = () => {
+    console.log("Bottom Left");
+    let settings = this.state.settings;
+    settings.pos_x = 50;
+
+    const height =
+      parseInt(this.props.image.height) / parseInt(this.state.factor);
+    settings.pos_y = height - 400;
+    console.log("height");
+    console.log(height);
     this.setState({ settings });
   };
 
@@ -164,6 +182,7 @@ class Canvas extends Component {
           refSetFontSize={this.refSetFontSize}
           refSetTopLeft={this.refSetTopLeft}
           refSetTopRight={this.refSetTopRight}
+          refSetBottomLeft={this.refSetBottomLeft}
         />
 
         <canvas

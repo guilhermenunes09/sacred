@@ -7,7 +7,7 @@ class Settings extends Component {
 
   changeFontSize = event => {
     const font_size = parseInt(event.currentTarget.value);
-    if (font_size >= 11 && font_size <= 40) {
+    if (font_size >= 1 && font_size <= 40) {
       this.props.loadCanvas(font_size, this.props.posX, this.props.posY);
       this.props.refSetFontSize(font_size);
     }
@@ -31,6 +31,10 @@ class Settings extends Component {
 
   topRightText = event => {
     this.props.refSetTopRight();
+  };
+
+  bottomLeftText = event => {
+    this.props.refSetBottomLeft();
   };
 
   render() {
@@ -94,7 +98,10 @@ class Settings extends Component {
               <div onClick={e => this.topRightText(e)} className="box" />
             </div>
             <div className="d-flex d-inline">
-              <div className="box top-left" />
+              <div
+                onClick={e => this.bottomLeftText(e)}
+                className="box top-left"
+              />
               <div className="box" />
             </div>
           </div>
