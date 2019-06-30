@@ -14,7 +14,8 @@ class Index extends Component {
       images: [],
       image: "",
       option_imgs: false,
-      option_quote: true
+      option_quote: true,
+      key_word: "environment"
     };
   }
 
@@ -46,14 +47,19 @@ class Index extends Component {
     this.setState({ option_quote: true });
   };
 
+  refSetKeyWord = key_word => {
+    console.log("Change Image");
+    this.setState({ key_word });
+  };
+
   render() {
     return (
       <div className="Index">
         <Request refQuote={this.changeQuote} {...this.state} />
-        <Unsplash refImages={this.refImages} />
+        <Unsplash key_word={this.state.key_word} refImages={this.refImages} />
 
         <div className="d-flex justify-content-center ">
-          <Canvas {...this.state} />
+          <Canvas refSetKeyWord={this.refSetKeyWord} {...this.state} />
         </div>
 
         <footer className="footer">

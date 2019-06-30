@@ -7,15 +7,30 @@ const unsplash = new Unsplashjs({
 });
 
 class Unsplash extends Component {
-  componentDidMount() {
+  constructor(props) {
+    super(props);
+  }
+  imageSearch = () => {
     unsplash.search
-      .photos("friendship", 1, 5)
+      .photos(this.props.key_word, 1, 5)
       .then(toJson)
       .then(json => {
         if (typeof json !== "undefined") {
           this.props.refImages(json.results);
+          console.log(json);
         }
       });
+  };
+  componentDidMount() {
+    console.log("Init Search");
+    this.imageSearch();
+  }
+
+  componentDidUpdate(prevProps) {
+    if (this.props.key_word !== prevProps.key_word) {
+      console.log("New Search");
+      this.imageSearch();
+    }
   }
 
   render() {

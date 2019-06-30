@@ -43,6 +43,14 @@ canvas {
   right: 0;
 }
 
+.image-options {
+  position: absolute;
+  background-color: yellow;
+  height: 100%;
+  width: 300px;
+  left: 0;
+}
+
 footer {
   background-color: red;
   position: fixed;

@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import Settings from "./settings.js";
+import ImageOptions from "./image_options.js";
 
 class Canvas extends Component {
   constructor(props) {
@@ -216,6 +217,7 @@ class Canvas extends Component {
 
     return (
       <div>
+        <ImageOptions refSetKeyWord={this.props.refSetKeyWord} />
         <Settings
           loadCanvas={this.loadCanvas}
           fontSize={this.state.settings.font_size}
