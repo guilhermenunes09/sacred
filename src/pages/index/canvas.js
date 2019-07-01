@@ -21,7 +21,7 @@ class Canvas extends Component {
     };
   }
 
-  createParagraph = (ctx, pos_x, pos_y, font_size) => {
+  createParagraph = (ctx, pos_x, pos_y, font_size, square_width) => {
     let text = this.props.quote;
     let words = text.split(" ");
     const leading = 0; // Space between letters
@@ -29,23 +29,27 @@ class Canvas extends Component {
 
     let line_height = pos_y; // Start Position Y
     let line = "";
-    const square_width = parseInt(this.state.settings.square_width);
     let line_width = 0;
     let square_height = 1;
     let next_word_width = "";
     let word_width = 0.0;
+    if (typeof square_width === "undefined") {
+      square_width = this.state.settings.square_width;
+    }
 
     for (let i = 0; i <= words.length; i++) {
       if (typeof words[i] !== "undefined") {
         line = line + words[i] + " ";
         word_width = ctx.measureText(words[i]).width;
         next_word_width = parseFloat(ctx.measureText(words[i + 1]).width);
-        line_width =
-          parseFloat(
-            line_width + ctx.measureText(line).width + next_word_width
-          ) *
-          (font_size * 0.03);
-        if (line_width >= square_width || i === words.length - 1) {
+        line_width = parseFloat(ctx.measureText(line).width);
+        console.log("Line Width:" + line_width);
+
+        if (
+          line_width + next_word_width >= square_width ||
+          i === words.length - 1
+        ) {
+          console.log("Square Width:" + square_width);
           ctx.fillText(line, pos_x, line_height);
           line = "";
           line_width = 0;
@@ -62,7 +66,7 @@ class Canvas extends Component {
     return square_height;
   };
 
-  loadCanvas = (font_size, font_color, pos_x, pos_y) => {
+  loadCanvas = (font_size, font_color, pos_x, pos_y, square_width) => {
     const canvas = this.refs.canvas;
     const ctx = canvas.getContext("2d");
     ctx.clearRect(0, 0, canvas.width, canvas.height);
@@ -72,16 +76,11 @@ class Canvas extends Component {
     const height = this.props.image.height / this.state.factor;
     ctx.drawImage(img, 0, 0, width, height);
 
-    ctx.font = `${font_size}px Arial`;
+    ctx.font = `${font_size}px sans-serif`;
     ctx.fillStyle = font_color;
 
-    console.log("font_size:" + font_size);
-    console.log("font_color:" + font_color);
-    console.log("pos_x:" + pos_x);
-    console.log("pos_y:" + pos_y);
-
     if (this.props.quote !== undefined) {
-      this.createParagraph(ctx, pos_x, pos_y, font_size);
+      this.createParagraph(ctx, pos_x, pos_y, font_size, square_width);
     }
   };
 
@@ -121,6 +120,12 @@ class Canvas extends Component {
   refSetPosY = pos_y => {
     let settings = this.state.settings;
     settings.pos_y = pos_y;
+    this.setState({ settings });
+  };
+
+  refSetSquareWidth = square_width => {
+    let settings = this.state.settings;
+    settings.square_width = square_width;
     this.setState({ settings });
   };
 
@@ -251,8 +256,10 @@ class Canvas extends Component {
           quote={this.state.quote}
           posX={this.state.settings.pos_x}
           posY={this.state.settings.pos_y}
+          squareWidth={this.state.settings.square_width}
           refSetPosX={this.refSetPosX}
           refSetPosY={this.refSetPosY}
+          refSetSquareWidth={this.refSetSquareWidth}
           refSetFontSize={this.refSetFontSize}
           refSetFontColor={this.refSetFontColor}
           refSetTopLeft={this.refSetTopLeft}

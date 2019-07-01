@@ -7,7 +7,7 @@ class Settings extends Component {
 
   changeFontSize = event => {
     const font_size = parseInt(event.currentTarget.value);
-    if (font_size >= 1 && font_size <= 40) {
+    if (font_size >= 1) {
       this.props.loadCanvas(
         font_size,
         this.props.fontColor,
@@ -46,9 +46,23 @@ class Settings extends Component {
       this.props.fontSize,
       this.props.fontColor,
       this.props.posX,
-      pos_y
+      pos_y,
+      this.props.squareWidth
     );
     this.props.refSetPosY(pos_y);
+  };
+
+  changeSquareWidth = event => {
+    const square_width = parseInt(event.currentTarget.value);
+    this.props.loadCanvas(
+      this.props.fontSize,
+      this.props.fontColor,
+      this.props.posX,
+      this.props.posY,
+      square_width
+    );
+    console.log("Change Square Width");
+    this.props.refSetSquareWidth(square_width);
   };
 
   topLeftText = event => {
@@ -79,7 +93,7 @@ class Settings extends Component {
                 <input
                   type="number"
                   min="11"
-                  max="40"
+                  max="1000"
                   className="form-control"
                   name="font-size"
                   pattern="[0-9]*"
@@ -138,6 +152,21 @@ class Settings extends Component {
                 />
               </label>
             </div>
+          </div>
+        </div>
+        <div className="row">
+          <div className="col">
+            Caixa de Texto:
+            <input
+              type="number"
+              min="0"
+              max="1000"
+              className="form-control"
+              name="square-width"
+              pattern="[0-9]*"
+              value={this.props.squareWidth}
+              onChange={e => this.changeSquareWidth(e)}
+            />
           </div>
         </div>
         <div className="row mx-auto">
