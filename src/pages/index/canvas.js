@@ -76,7 +76,7 @@ class Canvas extends Component {
     const height = this.props.image.height / this.state.factor;
     ctx.drawImage(img, 0, 0, width, height);
 
-    ctx.font = `${font_size}px sans-serif`;
+    ctx.font = `${font_size}px Crimson Text`;
     ctx.fillStyle = font_color;
 
     if (this.props.quote !== undefined) {
@@ -96,6 +96,12 @@ class Canvas extends Component {
 
     if (this.props.image !== prevProps.image) {
       this.refSetTopLeft();
+      const width = this.props.image.width / this.state.factor;
+      const height = this.props.image.height / this.state.factor;
+      const square_width = width - 100;
+      let settings = this.state.settings;
+      settings.square_width = square_width;
+      this.setState({ settings });
     }
   }
 
