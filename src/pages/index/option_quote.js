@@ -5,8 +5,10 @@ class OptionQuote extends Component {
     super(props);
     this.myRef = React.createRef();
     const quote = this.props.quote;
+    const author = this.props.author;
     this.state = {
-      quote: quote
+      quote: quote,
+      author: author
     };
   }
 
@@ -18,6 +20,13 @@ class OptionQuote extends Component {
     const text = e.currentTarget.value;
     this.props.refChangeText(text);
     this.setState({ quote: text });
+    console.log(text);
+  };
+
+  handleChangeAuthor = e => {
+    const text = e.currentTarget.value;
+    this.props.refChangeAuthor(text);
+    this.setState({ author: text });
     console.log(text);
   };
 
@@ -51,6 +60,20 @@ class OptionQuote extends Component {
                 />
               </label>
             </div>
+          </div>
+          <div className="col">
+            <label>
+              Autor:
+              <input
+                ref={this.myInput}
+                type="text"
+                className="form-control"
+                name="textarea"
+                defaultValue={this.props.author}
+                value={this.props.author}
+                onChange={e => this.handleChangeAuthor(e)}
+              />
+            </label>
           </div>
         </div>
       </React.Fragment>

@@ -10,7 +10,8 @@ class Index extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      quote: "Default",
+      quote: "Default Quote",
+      author: "Default Author",
       images: [],
       image: "",
       option_imgs: false,
@@ -36,6 +37,10 @@ class Index extends Component {
 
   changeText = text => {
     this.setState({ quote: text });
+  };
+
+  changeAuthor = author => {
+    this.setState({ author });
   };
 
   goToImageOption = () => {
@@ -85,6 +90,7 @@ class Index extends Component {
           {this.state.option_quote && (
             <OptionQuote
               refChangeText={this.changeText}
+              refChangeAuthor={this.changeAuthor}
               quote={this.state.quote}
             />
           )}

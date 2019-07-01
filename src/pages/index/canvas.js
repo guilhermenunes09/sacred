@@ -23,6 +23,7 @@ class Canvas extends Component {
 
   createParagraph = (ctx, pos_x, pos_y, font_size, square_width) => {
     let text = this.props.quote;
+    let author = this.props.author;
     let words = text.split(" ");
     const leading = 0; // Space between letters
     const spacing = 25 * (font_size * 0.05); // Space between lines
@@ -58,6 +59,11 @@ class Canvas extends Component {
         }
       }
     }
+
+    ctx.font = `${font_size - 3}px Crimson Text`;
+    let author_width = ctx.measureText(author).width;
+    ctx.fillText(author, square_width - author_width, line_height + 10);
+
     const text_attributes = {
       square_height: square_height
     };
