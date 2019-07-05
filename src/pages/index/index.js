@@ -5,6 +5,7 @@ import Unsplash from "../../api/unsplash.js";
 import ImgList from "./img_list.js";
 import OptionQuote from "./option_quote.js";
 import Canvas from "./canvas.js";
+const FB = window.FB;
 
 class Index extends Component {
   constructor(props) {
@@ -19,6 +20,16 @@ class Index extends Component {
       key_word: "environment",
       actual_page: 1
     };
+  }
+
+  componentDidMount() {
+    FB.ui(
+      {
+        method: "share",
+        href: "https://developers.facebook.com/docs/"
+      },
+      function(response) {}
+    );
   }
 
   changeQuote = quote => {
@@ -65,6 +76,14 @@ class Index extends Component {
     }
   };
 
+  refChangeMenu = menu => {
+    console.log("change Menu");
+    if (menu === "option_imgs") {
+      this.setState({ option_imgs: true });
+      this.setState({ option_quote: false });
+    }
+  };
+
   render() {
     return (
       <div className="Index">
@@ -76,7 +95,11 @@ class Index extends Component {
         />
 
         <div className="d-flex justify-content-center ">
-          <Canvas refSetKeyWord={this.refSetKeyWord} {...this.state} />
+          <Canvas
+            refChangeMenu={this.refChangeMenu}
+            refSetKeyWord={this.refSetKeyWord}
+            {...this.state}
+          />
         </div>
 
         <footer className="footer">

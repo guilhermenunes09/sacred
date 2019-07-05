@@ -44,13 +44,11 @@ class Canvas extends Component {
         word_width = ctx.measureText(words[i]).width;
         next_word_width = parseFloat(ctx.measureText(words[i + 1]).width);
         line_width = parseFloat(ctx.measureText(line).width);
-        console.log("Line Width:" + line_width);
 
         if (
           line_width + next_word_width >= square_width ||
           i === words.length - 1
         ) {
-          console.log("Square Width:" + square_width);
           ctx.fillText(line, pos_x, line_height);
           line = "";
           line_width = 0;
@@ -67,8 +65,9 @@ class Canvas extends Component {
     const text_attributes = {
       square_height: square_height
     };
-    ctx.rect(pos_x - 10, pos_y - 30, square_width, square_height + 30);
-    ctx.stroke();
+    /* Debugging for Square Width */
+    //ctx.rect(pos_x - 10, pos_y - 30, square_width, square_height + 30);
+    //ctx.stroke();
     return square_height;
   };
 
@@ -206,8 +205,7 @@ class Canvas extends Component {
         55,
         this.state.settings.font_size
       );
-      console.log("Text Attributes:");
-      console.log(text_attributes);
+
       return height - text_attributes - 30;
     }
   };
@@ -260,7 +258,10 @@ class Canvas extends Component {
 
     return (
       <div>
-        <ImageOptions refSetKeyWord={this.props.refSetKeyWord} />
+        <ImageOptions
+          refChangeMenu={this.props.refChangeMenu}
+          refSetKeyWord={this.props.refSetKeyWord}
+        />
         <Settings
           loadCanvas={this.loadCanvas}
           fontSize={this.state.settings.font_size}

@@ -9,6 +9,7 @@ class ImageOptions extends Component {
   changeImage = e => {
     console.log("Change Image");
     this.props.refSetKeyWord(e.currentTarget.value);
+    this.props.refChangeMenu("option_imgs");
   };
 
   render() {
@@ -28,6 +29,9 @@ class ImageOptions extends Component {
               </label>
             </div>
           </div>
+        </div>
+        <div className="row mx-auto">
+          <div className="col">Compartilhar no Facebook</div>
         </div>
       </div>
     );
