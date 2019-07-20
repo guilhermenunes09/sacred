@@ -4,32 +4,28 @@ import Request from "../../api/request.js";
 import Unsplash from "../../api/unsplash.js";
 import ImgList from "./img_list.js";
 import OptionQuote from "./option_quote.js";
+import OptionFont from './option_font.js';
 import Canvas from "./canvas.js";
-const FB = window.FB;
 
 class Index extends Component {
   constructor(props) {
     super(props);
     this.state = {
       quote: "Default Quote",
-      author: "Default Author",
+      author: "Bahá'u'lláh",
+      font_name: 'Arial',
       images: [],
       image: "",
       option_imgs: false,
       option_quote: true,
+      option_font: false,
       key_word: "environment",
       actual_page: 1
     };
   }
 
   componentDidMount() {
-    FB.ui(
-      {
-        method: "share",
-        href: "https://developers.facebook.com/docs/"
-      },
-      function(response) {}
-    );
+
   }
 
   changeQuote = quote => {
@@ -54,14 +50,26 @@ class Index extends Component {
     this.setState({ author });
   };
 
+  changeFont = font_name => {
+    this.setState({ font_name });
+  }
+
   goToImageOption = () => {
     this.setState({ option_imgs: true });
+    this.setState({ option_font: false });
     this.setState({ option_quote: false });
   };
 
   goToQuoteOption = () => {
     this.setState({ option_imgs: false });
+    this.setState({ option_font: false });
     this.setState({ option_quote: true });
+  };
+
+  goToFontOption = () => {
+    this.setState({ option_imgs: false });
+    this.setState({ option_quote: false });
+    this.setState({ option_font: true });
   };
 
   refSetKeyWord = key_word => {
@@ -117,11 +125,17 @@ class Index extends Component {
               quote={this.state.quote}
             />
           )}
+          {this.state.option_font && (
+            <OptionFont
+              refChangeFont={this.changeFont}
+            />
+          )}
         </footer>
 
         <div className="footer2 p-2">
           <span onClick={this.goToQuoteOption}>Citação</span> |{" "}
-          <span onClick={this.goToImageOption}>Imagem</span> | Estilos
+          <span onClick={this.goToImageOption}>Imagem</span> |{" "}
+          <span onClick={this.goToFontOption}>Fonte</span>
         </div>
       </div>
     );

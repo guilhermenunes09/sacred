@@ -21,9 +21,14 @@ class Canvas extends Component {
     };
   }
 
+  stripHtml = (unsafe) => {
+    return unsafe.replace(/<\/?("[^"]*"|'[^']*'|[^>])*(>|$)/g, "");
+  }
+
   createParagraph = (ctx, pos_x, pos_y, font_size, square_width) => {
-    let text = this.props.quote;
+    let text = this.stripHtml(this.props.quote);
     let author = this.props.author;
+    let font_name = this.props.font_name;
     let words = text.split(" ");
     const leading = 0; // Space between letters
     const spacing = 25 * (font_size * 0.05); // Space between lines
@@ -58,7 +63,7 @@ class Canvas extends Component {
       }
     }
 
-    ctx.font = `${font_size - 3}px Crimson Text`;
+    ctx.font = `${font_size - 3}px ${font_name}`;
     let author_width = ctx.measureText(author).width;
     ctx.fillText(author, square_width - author_width, line_height + 10);
 
@@ -72,6 +77,7 @@ class Canvas extends Component {
   };
 
   loadCanvas = (font_size, font_color, pos_x, pos_y, square_width) => {
+    const font_name = this.props.font_name;
     const canvas = this.refs.canvas;
     const ctx = canvas.getContext("2d");
     ctx.clearRect(0, 0, canvas.width, canvas.height);
@@ -81,7 +87,7 @@ class Canvas extends Component {
     const height = this.props.image.height / this.state.factor;
     ctx.drawImage(img, 0, 0, width, height);
 
-    ctx.font = `${font_size}px Crimson Text`;
+    ctx.font = `${font_size}px ${font_name}`;
     ctx.fillStyle = font_color;
 
     if (this.props.quote !== undefined) {
