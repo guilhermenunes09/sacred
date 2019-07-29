@@ -11,9 +11,9 @@ class Index extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      quote: "Default Quote",
+      quote: "",
       author: "Bahá'u'lláh",
-      font_name: 'Arial',
+      font_name: 'Oswald',
       images: [],
       image: "",
       option_imgs: false,
@@ -34,10 +34,14 @@ class Index extends Component {
 
   refImages = images => {
     this.setState({ images });
+    /* Auto load first Image */
+    const size = images.length;
+    let random = Math.floor(Math.random() * (+size - 0)) + 0;
+    this.setState({ image: images[random] });
   };
 
   refThumbClick = image => {
-    console.log("Image props");
+    console.log(">> Ref Thumb Click");
     console.log(image);
     this.setState({ image });
   };
@@ -104,8 +108,6 @@ class Index extends Component {
 
         <div className="d-flex justify-content-center ">
           <Canvas
-            refChangeMenu={this.refChangeMenu}
-            refSetKeyWord={this.refSetKeyWord}
             {...this.state}
           />
         </div>
@@ -115,6 +117,8 @@ class Index extends Component {
             <ImgList
               refChangeActualPage={this.refChangeActualPage}
               refThumbClick={this.refThumbClick}
+              refChangeMenu={this.refChangeMenu}
+              refSetKeyWord={this.refSetKeyWord}
               {...this.state}
             />
           )}

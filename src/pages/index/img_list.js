@@ -7,10 +7,9 @@ class ImgList extends Component {
     this.refThumbClick = this.refThumbClick.bind(this);
   }
 
-  componentDidMount() {}
+  componentDidMount() { }
 
   refThumbClick(image) {
-    console.log("Event Clicked" + image);
     this.props.refThumbClick(image);
   }
 
@@ -18,9 +17,25 @@ class ImgList extends Component {
     this.props.refChangeActualPage(delta);
   };
 
+  changeImage = e => {
+    this.props.refSetKeyWord(e.currentTarget.value);
+    this.props.refChangeMenu("option_imgs");
+  };
+
   render() {
     return (
       <React.Fragment>
+
+        <label>
+          Busca Imagem:
+                <input
+            type="text"
+
+            name="image-search"
+            onChange={e => this.changeImage(e)}
+          />
+        </label>
+
         <div className="d-flex flex-row mx-auto">
           <i
             onClick={e => this.changeActualPage(-1)}

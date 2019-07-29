@@ -8,59 +8,27 @@ class Settings extends Component {
   changeFontSize = event => {
     const font_size = parseInt(event.currentTarget.value);
     if (font_size >= 1) {
-      this.props.loadCanvas(
-        font_size,
-        this.props.fontColor,
-        this.props.posX,
-        this.props.posY
-      );
       this.props.refSetFontSize(font_size);
     }
   };
 
   changeFontColor = event => {
     const font_color = event.currentTarget.value;
-    this.props.loadCanvas(
-      this.props.fontSize,
-      font_color,
-      this.props.posX,
-      this.props.posY
-    );
     this.props.refSetFontColor(font_color);
   };
 
   handleChangePosX = event => {
     const pos_x = parseInt(event.currentTarget.value);
-    this.props.loadCanvas(
-      this.props.fontSize,
-      this.props.fontColor,
-      pos_x,
-      this.props.posY
-    );
     this.props.refSetPosX(pos_x);
   };
 
   handleChangePosY = event => {
     const pos_y = parseInt(event.currentTarget.value);
-    this.props.loadCanvas(
-      this.props.fontSize,
-      this.props.fontColor,
-      this.props.posX,
-      pos_y,
-      this.props.squareWidth
-    );
     this.props.refSetPosY(pos_y);
   };
 
   changeSquareWidth = event => {
     const square_width = parseInt(event.currentTarget.value);
-    this.props.loadCanvas(
-      this.props.fontSize,
-      this.props.fontColor,
-      this.props.posX,
-      this.props.posY,
-      square_width
-    );
     console.log("Change Square Width");
     this.props.refSetSquareWidth(square_width);
   };

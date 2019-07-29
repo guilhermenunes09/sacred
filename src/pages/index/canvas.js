@@ -1,6 +1,5 @@
 import React, { Component } from "react";
 import Settings from "./settings.js";
-import ImageOptions from "./image_options.js";
 
 class Canvas extends Component {
   constructor(props) {
@@ -25,7 +24,13 @@ class Canvas extends Component {
     return unsafe.replace(/<\/?("[^"]*"|'[^']*'|[^>])*(>|$)/g, "");
   }
 
-  createParagraph = (ctx, pos_x, pos_y, font_size, square_width) => {
+  createParagraph = (ctx) => {
+
+    const font_size = this.state.settings.font_size;
+    const pos_x = this.state.settings.pos_x;
+    const pos_y = this.state.settings.pos_y;
+    const square_width = this.state.settings.square_width;
+
     let text = this.stripHtml(this.props.quote);
     let author = this.props.author;
     let font_name = this.props.font_name;
@@ -76,56 +81,69 @@ class Canvas extends Component {
     return square_height;
   };
 
-  loadCanvas = (font_size, font_color, pos_x, pos_y, square_width) => {
+  loadCanvas = () => {
+
+    const font_size = this.state.settings.font_size;
+    const font_color = this.state.settings.font_color;
+    const pos_x = this.state.settings.pos_x;
+    const pos_y = this.state.settings.pos_y;
+    const square_width = this.state.settings.square_width;
     const font_name = this.props.font_name;
+    const img = this.refs.image;
+    const imageObj1 = new Image();
+    imageObj1.src = this.props.image.urls.regular
+    console.log("OBJECT");
+    console.log(this.props.image.urls.regular);
+
+    console.log("******** Load Canvas ***********");
+    console.log("img: ");
+    console.log(this.props.image);
+    console.log("font size: " + font_size);
+    console.log("font color: " + font_color);
+    console.log("pos x: " + pos_x);
+    console.log("pos y: " + pos_y);
+    console.log("square width: " + square_width);
+    console.log("font name: " + font_name);
+    // console.log("*******************");
+
     const canvas = this.refs.canvas;
     const ctx = canvas.getContext("2d");
     ctx.clearRect(0, 0, canvas.width, canvas.height);
     ctx.beginPath();
-    const img = this.refs.image;
-    const width = this.props.image.width / this.state.factor;
-    const height = this.props.image.height / this.state.factor;
-    ctx.drawImage(img, 0, 0, width, height);
-
     ctx.font = `${font_size}px ${font_name}`;
     ctx.fillStyle = font_color;
 
-    if (this.props.quote !== undefined) {
-      this.createParagraph(ctx, pos_x, pos_y, font_size, square_width);
+    const width = this.props.image.width / this.state.factor;
+    const height = this.props.image.height / this.state.factor;
+    imageObj1.onload = () => {
+      console.log("loaded");
+      ctx.drawImage(imageObj1, 0, 0, width, height);
+      if (this.props.quote !== undefined) {
+        this.createParagraph(ctx);
+      }
     }
+
+
   };
 
-  componentDidUpdate(prevProps) {
-    if (this.props !== prevProps) {
-      this.loadCanvas(
-        this.state.settings.font_size,
-        this.state.settings.font_color,
-        this.state.settings.pos_x,
-        this.state.settings.pos_y
-      );
+  componentDidUpdate(prevProps, prevState) {
+
+    if (prevProps !== this.props) {
+
+      // const width = this.props.image.width / this.state.factor;
+      // const height = this.props.image.height / this.state.factor;
+      // const square_width = width - 100;
+      // let settings = this.state.settings;
+      // settings.square_width = square_width;
+
+      if (this.props.image) {
+        this.loadCanvas();
+      }
+
     }
 
-    if (this.props.image !== prevProps.image) {
-      this.refSetTopLeft();
-      const width = this.props.image.width / this.state.factor;
-      const height = this.props.image.height / this.state.factor;
-      const square_width = width - 100;
-      let settings = this.state.settings;
-      settings.square_width = square_width;
-      this.setState({ settings });
-    }
-  }
 
-  componentDidMount() {
-    const img = this.refs.image;
-    img.onload = () => {
-      this.loadCanvas(
-        this.state.settings.font_size,
-        this.state.settings.font_color,
-        this.state.settings.pos_x,
-        this.state.settings.pos_y
-      );
-    };
+
   }
 
   refSetPosX = pos_x => {
@@ -162,12 +180,6 @@ class Canvas extends Component {
     let settings = this.state.settings;
     settings.pos_y = 50;
     settings.pos_x = 50;
-    this.loadCanvas(
-      this.state.settings.font_size,
-      this.state.settings.font_color,
-      settings.pos_x,
-      settings.pos_y
-    );
     this.setState({ settings });
   };
 
@@ -179,13 +191,6 @@ class Canvas extends Component {
     settings.pos_y = 50;
     let pos_x = width - square_width - 20;
     settings.pos_x = pos_x;
-    this.loadCanvas(
-      this.state.settings.font_size,
-      this.state.settings.font_color,
-      settings.pos_x,
-      settings.pos_y
-    );
-
     this.setState({ settings });
   };
 
@@ -205,13 +210,7 @@ class Canvas extends Component {
     ctx.fillStyle = "#FFFFFF";
 
     if (this.props.quote !== undefined) {
-      const text_attributes = this.createParagraph(
-        ctx,
-        55,
-        55,
-        this.state.settings.font_size
-      );
-
+      const text_attributes = this.createParagraph(ctx);
       return height - text_attributes - 30;
     }
   };
@@ -221,18 +220,10 @@ class Canvas extends Component {
     settings.pos_x = 50;
     const pos_y = this.calcPosY();
     settings.pos_y = pos_y;
-
-    this.loadCanvas(
-      this.state.settings.font_size,
-      this.state.settings.font_color,
-      settings.pos_x,
-      settings.pos_y
-    );
     this.setState({ settings });
   };
 
   refSetBottomRight = () => {
-    console.log("Bottom Right");
     let settings = this.state.settings;
     const pos_y = this.calcPosY();
     settings.pos_y = pos_y;
@@ -240,15 +231,7 @@ class Canvas extends Component {
     const width =
       parseInt(this.props.image.width) / parseInt(this.state.factor);
     const square_width = parseInt(this.state.settings.square_width);
-
     settings.pos_x = width - square_width - 20;
-
-    this.loadCanvas(
-      this.state.settings.font_size,
-      this.state.settings.font_color,
-      settings.pos_x,
-      settings.pos_y
-    );
     this.setState({ settings });
   };
 
@@ -264,12 +247,7 @@ class Canvas extends Component {
 
     return (
       <div>
-        <ImageOptions
-          refChangeMenu={this.props.refChangeMenu}
-          refSetKeyWord={this.props.refSetKeyWord}
-        />
         <Settings
-          loadCanvas={this.loadCanvas}
           fontSize={this.state.settings.font_size}
           fontColor={this.state.settings.font_color}
           quote={this.state.quote}
@@ -299,7 +277,7 @@ class Canvas extends Component {
           ref="image"
           src={this.props.image && this.props.image.urls.regular}
           width={300}
-          className="hidden"
+          className=""
         />
       </div>
     );
