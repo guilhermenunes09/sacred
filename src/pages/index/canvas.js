@@ -170,6 +170,7 @@ class Canvas extends Component {
           src={this.props.image && this.props.image.urls.regular}
           width={300}
           className="hidden"
+          crossorigin="anonymous"
         />
       </div>
     );

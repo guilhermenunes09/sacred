@@ -5,6 +5,7 @@ import Unsplash from "../../api/unsplash.js";
 import ImgList from "./img_list.js";
 import OptionQuote from "./option_quote.js";
 import OptionFont from './option_font.js';
+import OptionPublishing from './option_publishing.js';
 import Canvas from "./canvas.js";
 
 class Index extends Component {
@@ -26,8 +27,9 @@ class Index extends Component {
       },
       factor: 5,
       option_imgs: false,
-      option_quote: true,
       option_font: false,
+      option_publishing: false,
+      option_quote: true,
       key_word: "moon",
       actual_page: 1
     };
@@ -69,21 +71,31 @@ class Index extends Component {
   }
 
   goToImageOption = () => {
-    this.setState({ option_imgs: true });
     this.setState({ option_font: false });
     this.setState({ option_quote: false });
+    this.setState({ option_publishing: false });
+    this.setState({ option_imgs: true });
   };
 
   goToQuoteOption = () => {
     this.setState({ option_imgs: false });
     this.setState({ option_font: false });
+    this.setState({ option_publishing: false });
     this.setState({ option_quote: true });
   };
 
   goToFontOption = () => {
     this.setState({ option_imgs: false });
     this.setState({ option_quote: false });
+    this.setState({ option_publishing: false });
     this.setState({ option_font: true });
+  };
+
+  goToPublishingOption = () => {
+    this.setState({ option_imgs: false });
+    this.setState({ option_quote: false });
+    this.setState({ option_font: false });
+    this.setState({ option_publishing: true });
   };
 
   refSetKeyWord = key_word => {
@@ -250,12 +262,19 @@ class Index extends Component {
               refSetBottomRight={this.refSetBottomRight}
             />
           )}
+
+          {this.state.option_publishing && (
+            <OptionPublishing
+              {...this.state}
+            />
+          )}
         </footer>
 
         <div className="footer2 p-2">
           <span className="btn btn-primary" onClick={this.goToQuoteOption}>Citação</span>{" "}
           <span className="btn btn-primary" onClick={this.goToImageOption}>Imagem</span>{" "}
-          <span className="btn btn-primary" onClick={this.goToFontOption}>Fonte</span>
+          <span className="btn btn-primary" onClick={this.goToFontOption}>Fonte</span>{" "}
+          <span className="btn btn-primary" onClick={this.goToPublishingOption}>Publicar</span>
         </div>
       </div>
     );
