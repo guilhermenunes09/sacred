@@ -18,7 +18,8 @@ class ImgList extends Component {
   };
 
   changeImage = e => {
-    this.props.refSetKeyWord(e.currentTarget.value);
+    const image_key_word = this.refs.input_image.value;
+    this.props.refSetKeyWord(image_key_word);
     this.props.refChangeMenu("option_imgs");
   };
 
@@ -26,16 +27,19 @@ class ImgList extends Component {
     return (
       <React.Fragment>
 
-
-        <input
-          type="text"
-          className="form-control"
-          name="image-search"
-          defaultValue={this.props.key_word || ""}
-          placeholder={this.props.key_word || "Buscar Imagem"}
-          onChange={e => this.changeImage(e)}
-        />
-
+        <div className="input-group mb-3">
+          <input
+            type="text"
+            ref="input_image"
+            className="form-control"
+            name="image-search"
+            defaultValue={this.props.key_word || ""}
+            placeholder={this.props.key_word || "Buscar Imagem"}
+          />
+          <div className="input-group-append">
+            <button class="btn btn-outline-secondary" type="button" onClick={e => this.changeImage(e)}>Ok</button>
+          </div>
+        </div>
 
         <div className="d-flex flex-row mx-auto">
           <i

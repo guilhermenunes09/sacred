@@ -70,14 +70,17 @@ class Canvas extends Component {
 
     ctx.font = `${font_size - 3}px ${font_name}`;
     let author_width = ctx.measureText(author).width;
-    ctx.fillText(author, square_width - author_width, line_height + 10);
+    ctx.fillText(author, square_width - author_width + pos_x, line_height + 10);
 
     const text_attributes = {
       square_height: square_height
     };
     /* Debugging for Square Width */
-    //ctx.rect(pos_x - 10, pos_y - 30, square_width, square_height + 30);
-    //ctx.stroke();
+    ctx.rect(pos_x - 10, pos_y - 30, square_width, square_height + 30);
+    ctx.stroke();
+    if (this.props.settings.square_height !== parseInt(square_height)) {
+      this.props.refSetSquareHeight(parseInt(square_height));
+    }
     return square_height;
   };
 

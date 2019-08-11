@@ -50,6 +50,7 @@ class Index extends Component {
   };
 
   refThumbClick = image => {
+    this.refSetTopLeft();
     console.log(">> Ref Thumb Click");
     console.log(image);
     this.setState({ image });
@@ -124,6 +125,14 @@ class Index extends Component {
     this.setState({ settings });
   };
 
+  refSetSquareHeight = square_height => {
+    console.log("****")
+    let settings = this.state.settings;
+    settings.square_height = square_height;
+    this.setState({ settings });
+    console.log(settings);
+  }
+
   refSetFontSize = font_size => {
     let settings = this.state.settings;
     settings.font_size = font_size;
@@ -175,23 +184,12 @@ class Index extends Component {
   };
 
   calcPosY = () => {
-    const canvas = this.refs.canvas;
-    const ctx = canvas.getContext("2d");
-    ctx.clearRect(0, 0, canvas.width, canvas.height);
-    ctx.beginPath();
-
-    const img = this.refs.image;
-    const width = this.props.image.width / this.state.factor;
-    const height = this.props.image.height / this.state.factor;
-
-    ctx.drawImage(img, 0, 0, width, height);
-
-    ctx.font = `${this.state.settings.font_size}px Arial`;
-    ctx.fillStyle = "#FFFFFF";
-
-    if (this.props.quote !== undefined) {
-      const text_attributes = this.createParagraph(ctx);
-      return height - text_attributes - 30;
+    console.log("pos Y");
+    const height =
+      parseInt(this.state.image.height) / parseInt(this.state.factor);
+    console.log(height);
+    if (this.state.quote !== undefined) {
+      return height - this.state.settings.square_height - 60;
     }
   };
 
@@ -207,8 +205,9 @@ class Index extends Component {
           refImages={this.refImages}
         />
 
-        <div className="d-flex justify-content-center ">
+        <div className="d-flex justify-content-center canvas-layout">
           <Canvas
+            refSetSquareHeight={this.refSetSquareHeight}
             {...this.state}
           />
         </div>
