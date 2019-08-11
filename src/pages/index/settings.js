@@ -5,122 +5,13 @@ class Settings extends Component {
     super(props);
   }
 
-  changeFontSize = event => {
-    const font_size = parseInt(event.currentTarget.value);
-    if (font_size >= 1) {
-      this.props.refSetFontSize(font_size);
-    }
-  };
 
-  changeFontColor = event => {
-    const font_color = event.currentTarget.value;
-    this.props.refSetFontColor(font_color);
-  };
-
-  handleChangePosX = event => {
-    const pos_x = parseInt(event.currentTarget.value);
-    this.props.refSetPosX(pos_x);
-  };
-
-  handleChangePosY = event => {
-    const pos_y = parseInt(event.currentTarget.value);
-    this.props.refSetPosY(pos_y);
-  };
-
-  changeSquareWidth = event => {
-    const square_width = parseInt(event.currentTarget.value);
-    console.log("Change Square Width");
-    this.props.refSetSquareWidth(square_width);
-  };
-
-  topLeftText = event => {
-    this.props.refSetTopLeft();
-  };
-
-  topRightText = event => {
-    this.props.refSetTopRight();
-  };
-
-  bottomLeftText = event => {
-    this.props.refSetBottomLeft();
-  };
-
-  bottomRightText = event => {
-    this.props.refSetBottomRight();
-  };
 
   render() {
     return (
-      <div className="settings">
-        <h4 className="text-center">Configurações</h4>
-        <div className="row mx-auto">
-          <div className="col-6">
-            <div className="form-group">
-              <label>
-                Tamanho:
-                <input
-                  type="number"
-                  min="11"
-                  max="1000"
-                  className="form-control"
-                  name="font-size"
-                  pattern="[0-9]*"
-                  defaultValue={this.props.fontSize}
-                  onChange={e => this.changeFontSize(e)}
-                />
-              </label>
-            </div>
-          </div>
-          <div className="col-6">
-            <div className="form-group">
-              <label>
-                Cor:
-                <input
-                  type="text"
-                  className="form-control"
-                  name="font-color"
-                  defaultValue={this.props.fontColor}
-                  onChange={e => this.changeFontColor(e)}
-                />
-              </label>
-            </div>
-          </div>
-        </div>
-        <div className="row">
-          <div className="col-6">
-            <div className="form-group">
-              <label>
-                Pos X:
-                <input
-                  type="number"
-                  min="0"
-                  max="1000"
-                  className="form-control"
-                  name="pos-x"
-                  pattern="[0-9]*"
-                  value={this.props.posX}
-                  onChange={e => this.handleChangePosX(e)}
-                />
-              </label>
-            </div>
-          </div>
-          <div className="col-6">
-            <div className="form-group">
-              <label>
-                Pos Y:
-                <input
-                  type="number"
-                  min="0"
-                  max="1000"
-                  className="form-control"
-                  name="pos-y"
-                  pattern="[0-9]*"
-                  value={this.props.posY}
-                  onChange={e => this.handleChangePosY(e)}
-                />
-              </label>
-            </div>
-          </div>
+      <React.Fragment>
+        <div className="settings">
+          <h4 className="text-center">Configurações</h4>
         </div>
         <div className="row">
           <div className="col">
@@ -156,7 +47,7 @@ class Settings extends Component {
             </div>
           </div>
         </div>
-      </div>
+      </React.Fragment >
     );
   }
 }

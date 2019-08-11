@@ -26,20 +26,21 @@ class ImgList extends Component {
     return (
       <React.Fragment>
 
-        <label>
-          Busca Imagem:
-                <input
-            type="text"
 
-            name="image-search"
-            onChange={e => this.changeImage(e)}
-          />
-        </label>
+        <input
+          type="text"
+          className="form-control"
+          name="image-search"
+          defaultValue={this.props.key_word || ""}
+          placeholder={this.props.key_word || "Buscar Imagem"}
+          onChange={e => this.changeImage(e)}
+        />
+
 
         <div className="d-flex flex-row mx-auto">
           <i
             onClick={e => this.changeActualPage(-1)}
-            className="material-icons align-self-center p-2"
+            className="material-icons align-self-center p-2 arrow"
           >
             arrow_back_ios
           </i>
@@ -48,6 +49,7 @@ class ImgList extends Component {
               <div className="p-2 mx-auto" key={index}>
                 <Thumb
                   key={index}
+                  className="thumb"
                   onClick={() => this.refThumbClick(name)}
                   image_url={name.urls.thumb}
                 />
@@ -56,7 +58,7 @@ class ImgList extends Component {
           })}
           <i
             onClick={e => this.changeActualPage(1)}
-            class="material-icons align-self-center p-2"
+            class="material-icons align-self-center p-2 arrow"
           >
             arrow_forward_ios
           </i>

@@ -42,28 +42,26 @@ class OptionQuote extends Component {
   render() {
     return (
       <React.Fragment>
-        <div className="row mx-auto">
-          <div className="col text-center">
+        <div className="row">
+          <div className="col col-footer mx-auto text-center">
+            <span className="text-center footer-title">Citação</span>
+
             <div className="form-group">
-              <label>
-                Citação:
-                <textarea
-                  ref={this.myRef}
-                  rows="3"
-                  cols="30"
-                  type="text"
-                  className="form-control"
-                  name="textarea"
-                  defaultValue={this.props.quote}
-                  value={this.props.quote}
-                  onChange={e => this.handleChange(e)}
-                />
-              </label>
+              <textarea
+                ref={this.myRef}
+                rows="3"
+                type="text"
+                className="form-control"
+                name="textarea"
+                defaultValue={this.props.quote}
+                value={this.props.quote}
+                onChange={e => this.handleChange(e)}
+              />
             </div>
           </div>
-          <div className="col">
-            <label>
-              Autor:
+          <div className="col col-footer mx-auto text-center">
+            <span className="text-center footer-title">Autor</span>
+            <div className="form-group">
               <input
                 ref={this.myInput}
                 type="text"
@@ -73,9 +71,11 @@ class OptionQuote extends Component {
                 value={this.props.author}
                 onChange={e => this.handleChangeAuthor(e)}
               />
-            </label>
+            </div>
           </div>
+
         </div>
+
       </React.Fragment>
     );
   }
