@@ -36,7 +36,7 @@ class Index extends Component {
   }
 
   componentDidMount() {
-
+    this.refSetTopLeft();
   }
 
   changeQuote = quote => {

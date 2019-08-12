@@ -11,7 +11,7 @@ class Canvas extends Component {
         font_size: 23,
         pos_y: 100,
         pos_x: 210,
-        square_width: 400,
+        square_width: 200,
         square_height: 200,
         font_color: "#FFFFFF"
       },
@@ -76,8 +76,8 @@ class Canvas extends Component {
       square_height: square_height
     };
     /* Debugging for Square Width */
-    ctx.rect(pos_x - 10, pos_y - 30, square_width, square_height + 30);
-    ctx.stroke();
+    //◘ctx.rect(pos_x - 10, pos_y - 30, square_width, square_height + 30);
+    //ctx.stroke();
     if (this.props.settings.square_height !== parseInt(square_height)) {
       this.props.refSetSquareHeight(parseInt(square_height));
     }
@@ -97,7 +97,6 @@ class Canvas extends Component {
 
     // console.log("OBJECT");
     // console.log(this.props.image.urls.regular);
-
     // console.log("******** Load Canvas ***********");
     // console.log("img: ");
     // console.log(this.props.image);
