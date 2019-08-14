@@ -18,6 +18,7 @@ class Index extends Component {
       images: [],
       image: "",
       settings: {
+        text_style: "1",
         font_size: 23,
         pos_y: 100,
         pos_x: 210,
@@ -145,6 +146,14 @@ class Index extends Component {
     console.log(settings);
   }
 
+  refSetTextStyle = text_style => {
+    let settings = this.state.settings;
+    settings.text_style = text_style;
+    this.setState({ settings });
+    console.log("Set Text Style");
+    console.log(text_style);
+  }
+
   refSetFontSize = font_size => {
     let settings = this.state.settings;
     settings.font_size = font_size;
@@ -254,6 +263,7 @@ class Index extends Component {
               refSetPosX={this.refSetPosX}
               refSetPosY={this.refSetPosY}
               refSetSquareWidth={this.refSetSquareWidth}
+              refSetTextStyle={this.refSetTextStyle}
               refSetFontSize={this.refSetFontSize}
               refSetFontColor={this.refSetFontColor}
               refSetTopLeft={this.refSetTopLeft}

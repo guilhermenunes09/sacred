@@ -1,13 +1,21 @@
 import React, { Component } from 'react';
 
 class OptionFont extends Component {
+
+    changeTextStyle = (e) => {
+        const text_style = e.currentTarget.value;
+        console.log("Text Style");
+        console.log(text_style);
+        this.props.refSetTextStyle(text_style);
+    }
+
     changeFont = (e) => {
         const font_name = e.currentTarget.value;
         console.log("change font");
         console.log(e.currentTarget.value);
         this.props.refChangeFont(font_name);
-
     }
+
     changeFontSize = event => {
         const font_size = parseInt(event.currentTarget.value);
         if (font_size >= 1) {
@@ -58,6 +66,13 @@ class OptionFont extends Component {
                 <div className="row">
 
                     <div className="col col-footer mx-auto text-center">
+                        <span className="text-center footer-title">Estilo</span>
+                        <select name="text_style" className="form-control" onChange={e => this.changeTextStyle(e)}>
+                            <option value="1" className="d-inline font-option">Estilo 1</option>
+                            <option value="2" className="d-inline font-option">Estilo 2</option>
+                            <option value="3" className="d-inline font-option">Estilo 3</option>
+                        </select>
+
                         <span className="text-center footer-title">Tamanho</span>
                         <div className="form-group">
                             <input

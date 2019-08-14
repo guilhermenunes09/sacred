@@ -15,17 +15,7 @@ class Settings extends Component {
         </div>
         <div className="row">
           <div className="col">
-            Caixa de Texto:
-            <input
-              type="number"
-              min="0"
-              max="1000"
-              className="form-control"
-              name="square-width"
-              pattern="[0-9]*"
-              value={this.props.squareWidth}
-              onChange={e => this.changeSquareWidth(e)}
-            />
+            
           </div>
         </div>
         <div className="row mx-auto">
