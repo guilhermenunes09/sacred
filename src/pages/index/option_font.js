@@ -1,11 +1,34 @@
 import React, { Component } from 'react';
 import Slider from 'react-input-slider';
+import { SketchPicker } from 'react-color';
+import Popover from 'react-tiny-popover'
 
 class OptionFont extends Component {
 
     constructor(props) {
         super(props);
         this.state = {
+            isPopoverOpen: false,
+            displayColorPicker: false,
+        }
+
+    }
+
+    componentDidMount() {
+        document.addEventListener('mousedown', this.handleClickOutside);
+    }
+
+    componentWillUnmount() {
+        document.removeEventListener('mousedown', this.handleClickOutside);
+    }
+
+    setWrapperRef = node => {
+        this.wrapperRef = node;
+    }
+
+    handleClickOutside = event => {
+        if (this.wrapperRef && !this.wrapperRef.contains(event.target)) {
+            this.setState({ isPopoverOpen: false });
         }
     }
 
@@ -17,10 +40,8 @@ class OptionFont extends Component {
     }
 
     changeFont = (e) => {
-        const font_name = e.currentTarget.value;
-        console.log("change font");
-        console.log(e.currentTarget.value);
-        this.props.refChangeFont(font_name);
+
+        //this.props.refChangeFont(font_name);
     }
 
     changeFontSize = event => {
@@ -30,8 +51,10 @@ class OptionFont extends Component {
         }
     };
 
-    changeFontColor = event => {
-        const font_color = event.currentTarget.value;
+    changeFontColor = color => {
+        console.log("Color");
+        console.log(color);
+        const font_color = color.hex;
         this.props.refSetFontColor(font_color);
     };
 
@@ -114,15 +137,24 @@ class OptionFont extends Component {
                             <option className="d-inline font-option">Open Sans Condensed</option>
                         </select>
                         <span className="text-center footer-title">Cor</span>
-                        <div className="form-group">
-                            <input
-                                type="text"
-                                className="form-control"
-                                name="font-color"
-                                defaultValue={this.props.fontColor}
-                                onChange={e => this.changeFontColor(e)}
-                            />
-                        </div>
+
+                        <Popover
+                            isOpen={this.state.isPopoverOpen}
+                            position={'top'} // preferred position
+                            content={(
+                                <div ref={this.setWrapperRef}>
+                                    <SketchPicker
+                                        id={"G1"}
+                                        color={this.props.fontColor}
+                                        onChangeComplete={this.changeFontColor}
+                                    />
+                                </div>
+                            )}
+                        >
+                            <div style={{ backgroundColor: this.props.fontColor }} className="colorPick mx-auto shadow" onClick={() => this.setState({ isPopoverOpen: !this.state.isPopoverOpen })}>
+                            </div>
+                        </Popover>
+
                     </div>
                     <div className="col col-footer mx-auto text-center">
                         <span className="text-center footer-title">Posição: </span><br />
