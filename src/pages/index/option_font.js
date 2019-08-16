@@ -1,6 +1,13 @@
 import React, { Component } from 'react';
+import Slider from 'react-input-slider';
 
 class OptionFont extends Component {
+
+    constructor(props) {
+        super(props);
+        this.state = {
+        }
+    }
 
     changeTextStyle = (e) => {
         const text_style = e.currentTarget.value;
@@ -28,15 +35,24 @@ class OptionFont extends Component {
         this.props.refSetFontColor(font_color);
     };
 
-    handleChangePosX = event => {
-        const pos_x = parseInt(event.currentTarget.value);
+    handleChangePosX = x => {
+
+        console.log("Pos X");
+        console.log(x.x);
+        this.setState({ posx: x.x });
+        const pos_x = parseInt(x.x);
         this.props.refSetPosX(pos_x);
     };
 
-    handleChangePosY = event => {
-        const pos_y = parseInt(event.currentTarget.value);
+    handleChangePosY = x => {
+
+        console.log("Pos Y");
+        console.log(x.x);
+        this.setState({ posy: x.x });
+        const pos_y = parseInt(x.x);
         this.props.refSetPosY(pos_y);
     };
+
 
     changeSquareWidth = event => {
         const square_width = parseInt(event.currentTarget.value);
@@ -109,30 +125,26 @@ class OptionFont extends Component {
                         </div>
                     </div>
                     <div className="col col-footer mx-auto text-center">
-                        <span className="text-center footer-title">Pos X</span>
+                        <span className="text-center footer-title">Posição: </span><br />
+                        <span className="text-center footer-title">Pos X: </span>
 
-                        <input
-                            type="number"
-                            min="0"
-                            max="1000"
-                            className="form-control"
-                            name="pos-x"
-                            pattern="[0-9]*"
-                            value={this.props.posX}
-                            onChange={e => this.handleChangePosX(e)}
+                        <Slider
+                            axis="x"
+                            x={this.props.posX}
+                            xmin={0}
+                            xmax={this.props.width}
+                            onChange={x => this.handleChangePosX(x)}
                         />
 
-                        <span className="text-center footer-title">Pos Y</span>
 
-                        <input
-                            type="number"
-                            min="0"
-                            max="1000"
-                            className="form-control"
-                            name="pos-y"
-                            pattern="[0-9]*"
-                            value={this.props.posY}
-                            onChange={e => this.handleChangePosY(e)}
+                        <span className="text-center footer-title">Pos Y: </span>
+
+                        <Slider
+                            axis="x"
+                            x={this.props.posY}
+                            xmin={0}
+                            xmax={this.props.height}
+                            onChange={y => this.handleChangePosY(y)}
                         />
 
                     </div>

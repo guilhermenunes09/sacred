@@ -217,6 +217,8 @@ class Index extends Component {
 
 
   render() {
+    const width = parseInt(this.state.image.width) / parseInt(this.state.factor);
+    const height = parseInt(this.state.image.height) / parseInt(this.state.factor);
     return (
       <div className="Index">
         <Request refQuote={this.changeQuote} {...this.state} />
@@ -270,6 +272,8 @@ class Index extends Component {
               refSetTopRight={this.refSetTopRight}
               refSetBottomLeft={this.refSetBottomLeft}
               refSetBottomRight={this.refSetBottomRight}
+              width={width}
+              height={height}
             />
           )}
 
