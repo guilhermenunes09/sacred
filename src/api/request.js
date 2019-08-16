@@ -8,6 +8,9 @@ class Request extends Component {
       count_once: 0
     };
   }
+  componentDidMount() {
+    console.log("Request");
+  }
 
   render() {
     return (

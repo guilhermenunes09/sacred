@@ -4,6 +4,7 @@ import Request from "../../api/request.js";
 import Unsplash from "../../api/unsplash.js";
 import ImgList from "./img_list.js";
 import OptionQuote from "./option_quote.js";
+import axios from 'axios';
 import OptionFont from './option_font.js';
 import OptionPublishing from './option_publishing.js';
 import Canvas from "./canvas.js";
@@ -37,6 +38,7 @@ class Index extends Component {
   }
 
   componentDidMount() {
+    this.loadQuote();
     this.refSetTopLeft();
   }
 
@@ -66,6 +68,23 @@ class Index extends Component {
   changeAuthor = author => {
     this.setState({ author });
   };
+
+  loadQuote = () => {
+    /* Get the Hidden Words */
+    axios.get(`https://BahaiPrayers.net/api/prayer/HiddensByLanguage?languageid=8`)
+      .then(res => {
+        const data = res.data;
+        console.log(res);
+        const random = Math.floor(Math.random() * +data.length);
+        const quote = data[random].Text;
+        this.changeText(quote);
+        this.changeAuthor("Bahá'u'lláh");
+      })
+  }
+
+  refAutoRenewQuote = () => {
+    this.loadQuote();
+  }
 
   changeFont = font_name => {
     this.setState({ font_name });
@@ -221,7 +240,7 @@ class Index extends Component {
     const height = parseInt(this.state.image.height) / parseInt(this.state.factor);
     return (
       <div className="Index">
-        <Request refQuote={this.changeQuote} {...this.state} />
+
         <Unsplash
           actual_page={this.state.actual_page}
           key_word={this.state.key_word}
@@ -249,6 +268,7 @@ class Index extends Component {
             <OptionQuote
               refChangeText={this.changeText}
               refChangeAuthor={this.changeAuthor}
+              refAutoRenewQuote={this.refAutoRenewQuote}
               author={this.state.author}
               quote={this.state.quote}
             />

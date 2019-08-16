@@ -39,6 +39,11 @@ class OptionQuote extends Component {
     }
   }
 
+  autoRenewQuote = e => {
+    console.log("Auto Renew Quote");
+    this.props.refAutoRenewQuote();
+  }
+
   render() {
     return (
       <React.Fragment>
@@ -71,6 +76,18 @@ class OptionQuote extends Component {
                 value={this.props.author}
                 onChange={e => this.handleChangeAuthor(e)}
               />
+            </div>
+          </div>
+
+          <div className="col col-footer mx-auto text-center">
+            <span className="text-center footer-title">Carregar outra citação</span>
+            <div className="form-group">
+              <i
+                onClick={e => this.autoRenewQuote(e)}
+                class="material-icons align-self-center p-2 arrow"
+              >
+                autorenew
+          </i>
             </div>
           </div>
 
