@@ -26,8 +26,6 @@ class Canvas extends Component {
 
   createParagraph = (ctx) => {
     const text_style = this.props.settings.text_style;
-    console.log("Create Text Style");
-    console.log(text_style);
 
     const font_size = this.props.settings.font_size;
     const font_color = this.props.settings.font_color;
@@ -98,10 +96,27 @@ class Canvas extends Component {
     const img = this.refs.image;
     const width = this.props.image.width / this.state.factor;
     const height = this.props.image.height / this.state.factor;
-    ctx.drawImage(img, 0, 0, width, height);
+
+    const width2 = 640;
+    let height2 = null;
+
+    if (height > width) {
+
+      height2 = height * width2 / width;
+    } else {
+      height2 = width2 * height / width;
+    }
+
+    this.new_width = width2;
+    this.new_height = height2;
+    console.log("New Width: " + width2);
+    console.log("Width: " + width);
+    console.log("New Height: " + height2);
+    console.log("Height: " + height);
+
+    ctx.drawImage(img, 0, 0, width2, height2);
     imageObj1.onload = () => {
-      console.log("loaded");
-      ctx.drawImage(img, 0, 0, width, height);
+      ctx.drawImage(img, 0, 0, width2, height2);
       if (this.props.quote !== undefined) {
         this.createParagraph(ctx);
       }
@@ -128,6 +143,8 @@ class Canvas extends Component {
     const image = this.props.image;
     let width = 0;
     let height = 0;
+    console.log(this.new_width);
+    console.log(this.new_height);
 
     if (this.props.image !== undefined) {
       width = this.props.image.width;
@@ -139,8 +156,8 @@ class Canvas extends Component {
         <canvas
           className="canvas"
           ref="canvas"
-          width={width / this.state.factor}
-          height={height / this.state.factor}
+          width={this.new_width}
+          height={this.new_height}
           id="canvas"
         />
 

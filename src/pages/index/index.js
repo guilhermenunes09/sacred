@@ -56,8 +56,6 @@ class Index extends Component {
 
   refThumbClick = image => {
     this.refSetTopLeft();
-    console.log(">> Ref Thumb Click");
-    console.log(image);
     this.setState({ image });
   };
 
@@ -74,7 +72,6 @@ class Index extends Component {
     axios.get(`https://BahaiPrayers.net/api/prayer/HiddensByLanguage?languageid=8`)
       .then(res => {
         const data = res.data;
-        console.log(res);
         const random = Math.floor(Math.random() * +data.length);
         const quote = data[random].Text;
         this.changeText(quote);
@@ -119,19 +116,16 @@ class Index extends Component {
   };
 
   refSetKeyWord = key_word => {
-    console.log("Change Image");
     this.setState({ key_word });
   };
 
   refChangeActualPage = delta => {
-    console.log("Delta");
     if (this.state.actual_page + delta >= 1) {
       this.setState({ actual_page: this.state.actual_page + delta });
     }
   };
 
   refChangeMenu = menu => {
-    console.log("change Menu");
     if (menu === "option_imgs") {
       this.setState({ option_imgs: true });
       this.setState({ option_quote: false });
@@ -158,19 +152,15 @@ class Index extends Component {
   };
 
   refSetSquareHeight = square_height => {
-    console.log("****")
     let settings = this.state.settings;
     settings.square_height = square_height;
     this.setState({ settings });
-    console.log(settings);
   }
 
   refSetTextStyle = text_style => {
     let settings = this.state.settings;
     settings.text_style = text_style;
     this.setState({ settings });
-    console.log("Set Text Style");
-    console.log(text_style);
   }
 
   refSetFontSize = font_size => {
@@ -224,10 +214,8 @@ class Index extends Component {
   };
 
   calcPosY = () => {
-    console.log("pos Y");
     const height =
       parseInt(this.state.image.height) / parseInt(this.state.factor);
-    console.log(height);
     if (this.state.quote !== undefined) {
       return height - this.state.settings.square_height - 60;
     }

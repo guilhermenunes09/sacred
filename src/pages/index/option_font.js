@@ -40,8 +40,8 @@ class OptionFont extends Component {
     }
 
     changeFont = (e) => {
-
-        //this.props.refChangeFont(font_name);
+        const font_name = e.currentTarget.value;
+        this.props.refChangeFont(font_name);
     }
 
     changeFontSize = event => {
@@ -77,9 +77,8 @@ class OptionFont extends Component {
     };
 
 
-    changeSquareWidth = event => {
-        const square_width = parseInt(event.currentTarget.value);
-        console.log("Change Square Width");
+    changeSquareWidth = w => {
+        const square_width = parseInt(w.x);
         this.props.refSetSquareWidth(square_width);
     };
 
@@ -157,7 +156,7 @@ class OptionFont extends Component {
 
                     </div>
                     <div className="col col-footer mx-auto text-center">
-                        <span className="text-center footer-title">Posição: </span><br />
+                        <span className="text-center footer-title">Posição </span><br />
                         <span className="text-center footer-title">Pos X: </span>
 
                         <Slider
@@ -181,17 +180,17 @@ class OptionFont extends Component {
 
                     </div>
                     <div className="col col-footer mx-auto text-center">
-                        <span className="text-center footer-title">Caixa de Texto</span>
-                        <input
-                            type="number"
-                            min="0"
-                            max="1000"
-                            className="form-control"
-                            name="square-width"
-                            pattern="[0-9]*"
-                            value={this.props.squareWidth}
-                            onChange={e => this.changeSquareWidth(e)}
+                        <span className="text-center footer-title">Caixa de Texto</span><br />
+
+                        <Slider
+                            axis="x"
+                            x={this.props.squareWidth}
+                            xmin={10}
+                            xmax={this.props.width}
+                            onChange={w => this.changeSquareWidth(w)}
                         />
+
+
                     </div>
                     <div className="col col-footer mx-auto text-center">
                         <span className="text-center footer-title">Definir Posição</span>

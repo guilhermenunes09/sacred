@@ -6,6 +6,7 @@
 @import url('https://fonts.googleapis.com/css?family=Source+Code+Pro:200&display=swap');
 
 
+
 body {
   margin: 0;
   padding: 0;
@@ -19,11 +20,10 @@ body {
 }
 
 canvas {
-  width: auto;
-  height: 60vh;
+
   font-family: -apple-system, BlinkMacSystemFont, 'sans-serif', "Segoe UI", "Roboto", "Oxygen",
-    "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue",
-    sans-serif, 'Crimson Text', 'Source Code Pro', monospace;
+  "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue",
+  sans-serif, 'Crimson Text', 'Source Code Pro', monospace;
 }
 
 .canvas-layout {

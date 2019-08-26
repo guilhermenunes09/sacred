@@ -189,7 +189,7 @@ export const paragraph_style_3 = (settings, ctx) => {
                 console.log("Line Width:" + line_width);
                 console.log("Width:" + width / 2);
                 console.log(width / 2 - line_width);
-                ctx.fillText(line, width / 2 - line_width / 2 + pos_x - 50, line_height);
+                ctx.fillText(line, width / 2 - line_width / 2 + pos_x - 100, line_height);
                 line = "";
                 line_width = 0;
                 line_height += spacing;
@@ -200,7 +200,7 @@ export const paragraph_style_3 = (settings, ctx) => {
 
     ctx.font = `${font_size - 3}px ${font_name}`;
     let author_width = ctx.measureText(author).width;
-    ctx.fillText(author, width / 2 - author_width / 2 + pos_x - 50, line_height + 10);
+    ctx.fillText(author, width / 2 - author_width / 2 + pos_x - 100, line_height + 10);
 
     const text_attributes = {
         square_height: square_height
