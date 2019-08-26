@@ -20,6 +20,8 @@ body {
 }
 
 canvas {
+  width: 500;
+  height: 750;
 
   font-family: -apple-system, BlinkMacSystemFont, 'sans-serif', "Segoe UI", "Roboto", "Oxygen",
   "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue",

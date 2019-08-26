@@ -44,8 +44,8 @@ class OptionFont extends Component {
         this.props.refChangeFont(font_name);
     }
 
-    changeFontSize = event => {
-        const font_size = parseInt(event.currentTarget.value);
+    changeFontSize = size => {
+        const font_size = size.x;
         if (font_size >= 1) {
             this.props.refSetFontSize(font_size);
         }
@@ -111,19 +111,16 @@ class OptionFont extends Component {
                             <option value="3" className="d-inline font-option">Estilo 3</option>
                         </select>
 
-                        <span className="text-center footer-title">Tamanho</span>
-                        <div className="form-group">
-                            <input
-                                type="number"
-                                min="11"
-                                max="1000"
-                                className="form-control"
-                                name="font-size"
-                                pattern="[0-9]*"
-                                defaultValue={this.props.fontSize}
-                                onChange={e => this.changeFontSize(e)}
-                            />
-                        </div>
+                        <span className="text-center footer-title">Tamanho</span><br />
+
+
+                        <Slider
+                            axis="x"
+                            x={this.props.fontSize}
+                            xmin={0}
+                            xmax={100}
+                            onChange={size => this.changeFontSize(size)}
+                        />
                     </div>
                     <div className="col col-footer mx-auto text-center">
                         <span className="text-center footer-title">Fonte</span>
@@ -167,7 +164,7 @@ class OptionFont extends Component {
                             onChange={x => this.handleChangePosX(x)}
                         />
 
-
+                        <br />
                         <span className="text-center footer-title">Pos Y: </span>
 
                         <Slider

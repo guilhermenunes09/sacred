@@ -97,7 +97,7 @@ class Canvas extends Component {
     const width = this.props.image.width / this.state.factor;
     const height = this.props.image.height / this.state.factor;
 
-    const width2 = 640;
+    const width2 = 500;
     let height2 = null;
 
     if (height > width) {
@@ -156,8 +156,8 @@ class Canvas extends Component {
         <canvas
           className="canvas"
           ref="canvas"
-          width={this.new_width}
-          height={this.new_height}
+          width={500}
+          height={750}
           id="canvas"
         />
 
