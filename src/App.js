@@ -7,7 +7,7 @@ class App extends Component {
   render() {
     return (
       <Router>
-           <Route path="/" exact component={Index} />
+        <Route path="/" exact component={Index} />
       </Router>
     );
   }
